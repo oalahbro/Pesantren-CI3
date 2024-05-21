@@ -28,7 +28,14 @@
         &copy; 2020. <b>RumahRafif.</b> All Rights Reserved.
     </div>
 </div>
-
+<script>
+    function scrollToSection(id) {
+        var section = document.getElementById(id);
+        section.scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
+</script>
 </body>
 
 </html>
