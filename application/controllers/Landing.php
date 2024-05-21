@@ -24,14 +24,27 @@ class Landing extends CI_Controller
         parent::__construct();
         $this->load->model('M_landing'); // Load the model
     }
-    public function bersihkan_judul($judul)
+    private function footer()
+    {
+        $data = $this->M_landing->getFooter();
+        $footer['footer'] = [];
+
+        foreach ($data as $foot) {
+            $footer['footer'][] = [
+                'judul' => $foot->judul,
+                'isi' => $foot->isi
+            ];
+        }
+        return $footer;
+    }
+    private function bersihkan_judul($judul)
     {
         $judul_baru     = strtolower($judul);
         $judul_baru     = preg_replace("/[^a-zA-Z0-9\s]/", "", $judul_baru);
         $judul_baru     = str_replace(" ", "-", $judul_baru);
         return $judul_baru;
     }
-    public function maximum_kata($isi, $maximum)
+    private function maximum_kata($isi, $maximum)
     {
         $array_isi = explode(" ", $isi);
         $array_isi = array_slice($array_isi, 0, $maximum);
@@ -40,11 +53,13 @@ class Landing extends CI_Controller
     }
     public function index()
     {
-        $data = $this->M_landing->getData();
+        $data['landing'] = $this->M_landing->getData();
+        $data['tutors'] = $this->M_landing->getTutors();
+        $data['partners'] = $this->M_landing->getPartners();
 
         $parse['halaman'] = [];
 
-        foreach ($data as $item) {
+        foreach ($data['landing'] as $item) {
             $gambar = '';
             if (preg_match('/<img.*?src=["\'](.*?)["\']/', $item->isi, $matches)) {
                 $gambar = $matches[1]; // Extract the image source URL
@@ -65,9 +80,50 @@ class Landing extends CI_Controller
                 'url' => $url
             ];
         }
-        // print_r($parse);
+
+        $parse['tutors'] = [];
+
+        foreach ($data['tutors'] as $tutors) {
+
+            $nama  = $this->bersihkan_judul($tutors->nama);
+            $url = base_url() . "tutors.php/$tutors->id/$nama";
+
+            $foto   = $tutors->foto;
+
+            if ($foto) {
+                $foto = $foto;
+            } else {
+                $foto = 'tutors_default_picture.png';
+            }
+
+            $parse['tutors'][] = [
+                'url' => $url,
+                'foto' => $foto,
+                'nama' => $tutors->nama
+            ];
+        }
+
+        $parse['partners'] = [];
+
+        foreach ($data['partners'] as $partners) {
+            $nama  = $this->bersihkan_judul($partners->nama);
+            $url = base_url() . "partners.php/$partners->id/$partners->nama";
+
+            $foto   = $partners->foto;
+
+            if ($foto) {
+                $foto = $foto;
+            } else {
+                $foto =  'partners_default_picture.png';
+            }
+
+            $parse['partners'][] = [
+                'url' => $url,
+                'foto' => $foto
+            ];
+        }
         $this->load->view('components/inc_header');
         $this->load->view('landing', $parse);
-        $this->load->view('components/inc_footer');
+        $this->load->view('components/inc_footer', $this->footer());
     }
 }
