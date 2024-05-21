@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Landing extends CI_Controller
+class Landing extends MY_Controller
 {
 
     /**
@@ -23,19 +23,6 @@ class Landing extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_landing'); // Load the model
-    }
-    private function footer()
-    {
-        $data = $this->M_landing->getFooter();
-        $footer['footer'] = [];
-
-        foreach ($data as $foot) {
-            $footer['footer'][] = [
-                'judul' => $foot->judul,
-                'isi' => $foot->isi
-            ];
-        }
-        return $footer;
     }
     private function bersihkan_judul($judul)
     {
@@ -67,7 +54,7 @@ class Landing extends CI_Controller
             $gambar = str_replace("../gambar/", "assets/gambar/", $gambar);
 
             $judul  = $this->bersihkan_judul($item->judul);
-            $url = base_url() . "halaman.php/$item->id/$judul";
+            $url = "halaman?id=$item->id/$judul";
 
             $isi = $this->maximum_kata(strip_tags($item->isi), 30);
 
@@ -124,6 +111,6 @@ class Landing extends CI_Controller
         }
         $this->load->view('components/inc_header');
         $this->load->view('landing', $parse);
-        $this->load->view('components/inc_footer', $this->footer());
+        $this->load->view('components/inc_footer');
     }
 }

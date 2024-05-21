@@ -1,1 +1,2 @@
-<?php print_r($halaman[2]);
+<?php print_r($footer);
+echo $footer[0]['judul'];
