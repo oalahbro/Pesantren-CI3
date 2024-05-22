@@ -14,11 +14,11 @@
             <div class="logo"><a href='<?php echo base_url() ?>'>WAHDI CENTER</a></div>
             <div class="menu">
                 <ul>
-                    <li><a onclick="scrollToSection('home')">Home</a></li>
-                    <li><a onclick="scrollToSection('visi misi')">Visi Misi</a></li>
-                    <li><a onclick="scrollToSection('manajemen')">Manajemen</a></li>
-                    <li><a onclick="scrollToSection('pilar - pilar')">Pilar</a></li>
-                    <li><a onclick="scrollToSection('contact')">Contact</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#tutors">Tutors</a></li>
+                    <li><a href="#partners">Partners</a></li>
+                    <li><a href="#contact">Contact</a></li>
                     <li>
 
                         <a href="pendaftaran.php" class="tbl-biru">Sign Up</a>
