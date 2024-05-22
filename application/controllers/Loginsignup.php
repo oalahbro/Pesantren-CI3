@@ -15,6 +15,10 @@ class Loginsignup extends MY_Controller
         if ($this->session->userdata('user')) {
             // redirect(base_url() . "admin/admin");
             print_r($this->session->userdata('user'));
+        } else {
+            $this->load->view('components/inc_header');
+            $this->load->view('login');
+            $this->load->view('components/inc_footer');
         }
     }
 
@@ -33,7 +37,6 @@ class Loginsignup extends MY_Controller
 
             if ($members) {
                 $this->session->set_userdata('user', $members);
-                // echo "Login berhasil!";
                 redirect(base_url('/Loginsignup'));
             } else {
                 $this->session->set_flashdata('err', 'Username atau Password salah !');
