@@ -10,7 +10,7 @@
 
 <div id="copyright">
     <div class="wrapper">
-        &copy; 2020. <b>RumahRafif.</b> All Rights Reserved.
+        &copy; 2016. <b>Wahdi Center</b> Hak Cipta.
     </div>
 </div>
 
