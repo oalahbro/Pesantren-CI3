@@ -14,7 +14,7 @@ class Loginsignup extends MY_Controller
 
         if ($this->session->userdata('user')) {
             // redirect(base_url() . "admin/admin");
-            print_r($this->session->userdata('user'));
+            redirect(base_url('Loginsignup/profile'));
         } else {
             $this->load->view('components/inc_header');
             $this->load->view('login');
@@ -45,5 +45,12 @@ class Loginsignup extends MY_Controller
         } else {
             redirect(base_url('/Loginsignup'));
         }
+    }
+
+    public function profile()
+    {
+        $this->load->view('components/inc_header');
+        $this->load->view('profile');
+        $this->load->view('components/inc_footer');
     }
 }

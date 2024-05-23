@@ -1,2 +1,1 @@
-<?php print_r($footer);
-echo $footer[0]['judul'];
+<?php print_r($header);
