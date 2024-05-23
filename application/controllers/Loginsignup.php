@@ -49,8 +49,15 @@ class Loginsignup extends MY_Controller
 
     public function profile()
     {
-        $this->load->view('components/inc_header');
-        $this->load->view('profile');
-        $this->load->view('components/inc_footer');
+        if ($this->session->userdata('user')) {
+            $where = ['email' => $this->session->userdata('user')->email];
+            $data['profile'] = $this->M_login->getMember($where);
+            // print_r($profile);
+            $this->load->view('components/inc_header');
+            $this->load->view('profile', $data);
+            $this->load->view('components/inc_footer');
+        } else {
+            redirect(base_url('/Loginsignup'));
+        }
     }
 }
