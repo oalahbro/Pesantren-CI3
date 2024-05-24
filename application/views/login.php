@@ -103,18 +103,57 @@
     </div>
 </div>
 <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="termsModalLabel">Terms & Conditions</h5>
+                <h5 class="modal-title" id="termsModalLabel">Syarat & Ketentuan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <!-- Your terms and conditions content here -->
-                <p>This is the content of your terms and conditions. You can add whatever text or agreements you want here.</p>
+                <p>Syarat Keanggotaan:
+                    <ol>
+                        <li>Warga Negara Indonesia.</li>
+                        <li>Mengisi dan menandatangani formulir permohonan menjadi anggota GASSEBU.</li>
+                        <li>Menyerahkan Fotokopi E-KTP & KK.</li>
+                        <li>Membayar kotak GASSEBU setiap bulan dan menyerahkan dana GASSEBU kepada Koordinator di wilayahnya.</li>
+                        <li>Bersedia mengikuti syarat dan ketentuan Keanggotaan GASSEBU.</li>
+                    </ol>
+                </p>
+                <p>Masa Akhir Keanggotaan:
+                    <ol>
+                        <li>Meninggal dunia.</li>
+                        <li>Berhenti atas kehendak sendiri, (ada surat pengunduran diri).</li>
+                        <li>3 bulan berturut-turut tidak andil dalam pengisian kotak GASSEBU.</li>
+                    </ol>
+                </p>
+                <p>Akad Keanggotaan:
+                    <li>Akad yang digunakan adalah Infaq/Sedekah, dimana Anggota GASSEBU mewakilkan/mendelegasikan pengurus penyaluran sedekahnya kepada koordinator dan pengurus Wahdi GASSEBU agar dapat menjadi manfaat dunia akhirat.</li>
+                </p>
+                <p>Prosedur Pengambilan Dana Kaleng GASSEBU:
+                    <ol>
+                        <li>Setelah menyerahkan fotokopi E-KTP & KK, calon anggota GASSEBU terdaftar resmi menjadi anggota GASSEBU dan mendapatkan kaleng GASSEBU</li>
+                        <li>Kaleng GASSEBU diisi sesuai dengan kemampuan namun diusahakan sehari di isi uang minimal Rp. 1000</li>
+                        <li>Tanggal pengambilan dana kaleng GASSEBU adalah tanggal pertama kali kaleng GASSEBU diberikan kepada anggota.</li>
+                        <li>Dana kaleng GASSEBU dapat di transfer setiap bulannya melalui rekening Wahdi GASSEBU dibawah in:
+                            <ul>
+                                <li>No. Rekening : 042-301-002-173-562</li>
+                                <li>Atas Nama : Wahdi GASSEBU</li>
+                                <li>Bank : Bank Rakyat Indonesia (BRI)</li>
+                            </ul>
+                            <ul>
+                                <li>No. Rekening : 7167211121</li>
+                                <li>Atas Nama : Wahdi GASSEBU Pusat</li>
+                                <li>Bank : Bank Syariah Indonesia</li>
+                            </ul>
+                        </li>
+                        <li>Koordinator berhak mengambil kembali kaleng GASSEBU apabila tidak ada setoran dana selama 3 (tiga) bulan berturut-turut.</li>
+                </ol>
+                </p>
+                
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Setuju</button>
             </div>
         </div>
     </div>
