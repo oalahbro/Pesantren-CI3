@@ -60,4 +60,11 @@ class Loginsignup extends MY_Controller
             redirect(base_url('/Loginsignup'));
         }
     }
+
+    public function updateProfile()
+    {
+        // $data = [
+        //     'nama'
+        // ]
+    }
 }
