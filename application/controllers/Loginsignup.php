@@ -63,8 +63,35 @@ class Loginsignup extends MY_Controller
 
     public function updateProfile()
     {
-        $this->load->view('components/inc_header');
-        $this->load->view('test');
-        $this->load->view('components/inc_footer');
+        $profileData = array(
+            'nama_panggilan' => $this->input->post('nama_panggilan'),
+            'telp' => $this->input->post('telp'),
+            'pekerjaan' => $this->input->post('pekerjaan'),
+            'alamat' => $this->input->post('alamat'),
+            'pendidikan_terakhir' => $this->input->post('pendidikan_terakhir'),
+            'jumlah_anggota_keluarga' => $this->input->post('jumlah_anggota_keluarga'),
+            'nama_keluarga' => $this->input->post('nama_keluarga'),
+            'status_keluarga' => $this->input->post('status_keluarga'),
+            'telp_keluarga' => $this->input->post('telp_keluarga')
+        );
+
+        // Panggil model untuk melakukan pembaruan profil
+
+        $this->M_login->updateProfile($profileData);
+        $where = ['id' => $this->session->userdata('user')->id];
+        $members =  $this->M_login->getMember($where);
+        $this->session->set_userdata('user', $members);
+        // print_r($this->session->userdata('user'));
+        redirect(base_url('/Loginsignup/profile'));
+    }
+    public function test()
+    {
+        print_r($this->session->userdata('user'));
+    }
+
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        redirect('Loginsignup');
     }
 }

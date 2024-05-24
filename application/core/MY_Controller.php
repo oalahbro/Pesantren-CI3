@@ -12,7 +12,7 @@ class  MY_Controller extends CI_Controller
         $footer_data = $this->M_landing->getFooter();
         $data['footer'] = [];
         if ($this->session->userdata('user')) {
-            $data['header'] = $this->session->userdata('user')->nama_lengkap;
+            $data['header'] = $this->session->userdata('user')->nama_panggilan;
         }
 
         foreach ($footer_data as $foot) {

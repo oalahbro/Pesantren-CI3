@@ -32,21 +32,17 @@
 </body>
 <script>
     $(document).ready(function() {
-        $('#toggleEdit').click(function() {
-            var formFields = $('#editForm input');
-            var submitButton = $('#submitButton');
-            if (formFields.prop('disabled')) {
-                formFields.prop('disabled', false);
-                $(this).removeClass('btn-primary').addClass('btn-secondary');
-            } else {
-                formFields.prop('disabled', true);
-                $(this).removeClass('btn-secondary').addClass('btn-primary');
-            }
-        });
-
         var initialData = {};
         $('#editForm input').each(function() {
             initialData[$(this).attr('id')] = $(this).val();
+        });
+
+        $('#toggleEdit').click(function() {
+            $('#editForm input:not(.disabled-permanent)').prop('disabled', function(i, val) {
+                return !val;
+            });
+            $('#submitButton').toggle();
+            $(this).toggleClass('btn-primary btn-secondary');
         });
 
         // Cek perubahan pada setiap input
@@ -76,17 +72,6 @@
         });
     });
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('termsCheck').addEventListener('change', function() {
-            var submitButton = document.getElementById('submitButton');
-            submitButton.disabled = !this.checked;
-            if (this.checked) {
-                var termsModal = new bootstrap.Modal(document.getElementById('termsModal'));
-                termsModal.show();
-            }
-        });
-    });
-</script>
+
 
 </html>

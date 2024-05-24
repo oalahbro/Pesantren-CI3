@@ -119,3 +119,15 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('termsCheck').addEventListener('change', function() {
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = !this.checked;
+            if (this.checked) {
+                var termsModal = new bootstrap.Modal(document.getElementById('termsModal'));
+                termsModal.show();
+            }
+        });
+    });
+</script>

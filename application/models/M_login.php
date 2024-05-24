@@ -19,4 +19,11 @@ class M_login extends CI_Model
         // Mengembalikan satu baris sebagai objek
         return $query->row();
     }
+    public function updateProfile($profileData)
+    {
+        // Lakukan pembaruan profil di database
+        // Pastikan tabel dan kolom sesuai dengan struktur database Anda
+        $this->db->where('id', $this->session->userdata('user')->id); // Misalnya, sesuai dengan id user saat ini
+        $this->db->update('members', $profileData); // Ganti 'users' dengan nama tabel profil Anda
+    }
 }

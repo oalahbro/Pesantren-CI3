@@ -25,7 +25,7 @@
                     <li><a href="#contact">Contact</a></li>
                     <li>
                         <?php if (isset($header)) {
-                            echo "<a href='" . base_url("/Loginsignup/profile'>") . $header . "</a> | <a href='" . base_url('/logout.php') . "'>Logout</a>";
+                            echo "<a href='" . base_url("/Loginsignup/profile'>") . $header . "</a> | <a href='" . base_url('/Loginsignup/logout') . "'>Logout</a>";
                         } else { ?>
                             <a href="<?php echo base_url('Loginsignup') ?>" class="tbl-biru">Login</a>
                         <?php } ?>
