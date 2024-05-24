@@ -45,17 +45,60 @@
         </div>
         <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab">
             <h2 class="mt-4">Register</h2>
+            <h4 class="mt-4">Data Diri</h4>
             <form action="<?php echo site_url('auth/register'); ?>" method="post">
+                <div class="mb-3">
+                    <label for="register-nama" class="form-label">Nama Lengkap:</label>
+                    <input type="text" class="form-control" id="register-nama" name="nama" placeholder="Sesuai E-KTP" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-namapanggilan" class="form-label">Nama Panggilan:</label>
+                    <input type="text" class="form-control" id="register-namapanggilan" name="namapanggilan" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-alamat" class="form-label">Alamat Domisili:</label>
+                    <input type="text" class="form-control" id="register-alamat" name="alamat" required>
+                </div>
                 <div class="mb-3">
                     <label for="register-email" class="form-label">Email:</label>
                     <input type="email" class="form-control" id="register-email" name="email" required>
                 </div>
                 <div class="mb-3">
-                    <label for="register-password" class="form-label">Password:</label>
-                    <input type="password" class="form-control" id="register-password" name="password" required>
+                    <label for="register-notelp" class="form-label">No. Telphone/Wa:</label>
+                    <input type="number" class="form-control" id="register-notelp" name="notelp" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-status" class="form-label">Status:</label>
+                    <input type="text" class="form-control" id="register-status" name="status" placeholder="Menikah / Belum Menikah" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-pekerjaan" class="form-label">Pekerjaan:</label>
+                    <input type="text" class="form-control" id="register-pekerjaan" name="pekerjaan" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-pendidikan" class="form-label">Pendidikan:</label>
+                    <input type="text" class="form-control" id="register-pendidikan" name="pendidikan" placeholder="Pendidikan Terakhir" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-anggotakeluarga" class="form-label">Anggota Keluarga:</label>
+                    <input type="number" class="form-control" id="register-anggotakeluarga" name="anggotakeluarga" required>
+                </div>
+                <h4 class="mt-4">Data Keluarga Terdekat</h4>
+                <div class="mb-3">
+                    <label for="register-keluargaterdekat" class="form-label">Nama Keluarga Terdekat:</label>
+                    <input type="text" class="form-control" id="register-keluargaterdekat" name="keluargaterdekat" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-nomerkeluarga" class="form-label">Nomer Keluarga Terdekat:</label>
+                    <input type="number" class="form-control" id="register-nomerkeluarga" name="nomerkeluarga" required>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="termsCheck" data-toggle="modal" data-target="#termsModal">
+                    <label class="form-check-label" for="termsCheck">I agree to the Terms & Conditions</label>
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
+            
         </div>
     </div>
 </div>

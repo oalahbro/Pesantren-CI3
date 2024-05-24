@@ -1,5 +1,4 @@
 </div>
-
 <div id="contact">
     <div class="wrapper">
         <div class="footer">
