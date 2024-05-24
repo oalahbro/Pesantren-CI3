@@ -63,8 +63,8 @@ class Loginsignup extends MY_Controller
 
     public function updateProfile()
     {
-        // $data = [
-        //     'nama'
-        // ]
+        $this->load->view('components/inc_header');
+        $this->load->view('test');
+        $this->load->view('components/inc_footer');
     }
 }
