@@ -92,6 +92,10 @@
                     <label for="register-nomerkeluarga" class="form-label">Nomer Keluarga Terdekat:</label>
                     <input type="number" class="form-control" id="register-nomerkeluarga" name="nomerkeluarga" required>
                 </div>
+                <div class="mb-3">
+                    <label for="register-statuskeluarga" class="form-label">Status Keluarga Terdekat:</label>
+                    <input type="text" class="form-control" id="register-statuskeluarga" name="statuskeluarga" required>
+                </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="termsCheck">
                     <label class="form-check-label" for="termsCheck">I agree to the Terms & Conditions</label>
