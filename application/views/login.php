@@ -13,28 +13,28 @@
         </ul>
     </div>
     <div class="tab-content" id="pills-tabContent">
+        <?php if ($this->session->flashdata('error')) : ?>
+            <div class="alert alert-danger"><?php echo $this->session->flashdata('error'); ?></div>
+        <?php endif; ?>
+        <?php if ($this->session->flashdata('success')) : ?>
+            <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
+        <?php endif; ?>
         <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab">
             <h2 class="mt-4">Login</h2>
-            <form action="<?php echo base_url("Loginsignup/apiAuth"); ?>" method="post">
+            <form id="loginForm" action="javascript:void(0);" method="post">
                 <div class="mb-3">
                     <label for="login-email" class="form-label">Email:</label>
                     <input type="email" class="form-control" id="login-email" name="email" required>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" id="passwordField" style="display: none;">
                     <label for="login-password" class="form-label">Password:</label>
-                    <input type="password" class="form-control" id="login-password" name="password" required>
+                    <input type="password" class="form-control" id="login-password" name="password">
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary" id="loginButton">Login</button>
             </form>
         </div>
         <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab">
             <h2 class="mt-4">Register</h2>
-            <?php if ($this->session->flashdata('error')) : ?>
-                <div class="alert alert-danger"><?php echo $this->session->flashdata('error'); ?></div>
-            <?php endif; ?>
-            <?php if ($this->session->flashdata('success')) : ?>
-                <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
-            <?php endif; ?>
             <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
             <h4 class="mt-4">Data Diri</h4>
             <form action="<?php echo site_url('Loginsignup/register'); ?>" method="post">
@@ -160,6 +160,7 @@
         </div>
     </div>
 </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('termsCheck').addEventListener('change', function() {
@@ -187,3 +188,7 @@
         }
     });
 </script>
+<script>
+    var BASE_URL = "<?php echo base_url(); ?>";
+</script>
+<script src="<?php echo base_url('assets/js/passwordCheck.js'); ?>"></script>
