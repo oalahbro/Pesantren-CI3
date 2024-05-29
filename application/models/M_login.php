@@ -29,4 +29,17 @@ class M_login extends CI_Model
     {
         return $this->db->insert('members', $data);
     }
+    public function update_password($user_id, $password)
+    {
+        // Enkripsi password sebelum disimpan
+        $hashed_password = md5($password);
+
+        $this->db->set('password', $hashed_password);
+        $this->db->where('id', $user_id);
+        return $this->db->update('members');
+    }
+    public function get_user_by_email($email)
+    {
+        return $this->db->get_where('members', ['email' => $email])->row();
+    }
 }

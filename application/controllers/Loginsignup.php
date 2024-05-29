@@ -14,7 +14,6 @@ class Loginsignup extends MY_Controller
     {
 
         if ($this->session->userdata('user')) {
-            // redirect(base_url() . "admin/admin");
             redirect(base_url('Loginsignup/profile'));
         } else {
             $this->load->view('components/inc_header');
@@ -50,7 +49,7 @@ class Loginsignup extends MY_Controller
 
     public function profile()
     {
-        if ($this->session->userdata('user')) {
+        if ($this->session->userdata('user')->password) {
             $where = ['email' => $this->session->userdata('user')->email];
             $data['profile'] = $this->M_login->getMember($where);
             // print_r($profile);
@@ -58,37 +57,98 @@ class Loginsignup extends MY_Controller
             $this->load->view('profile', $data);
             $this->load->view('components/inc_footer');
         } else {
-            redirect(base_url('/Loginsignup'));
+            redirect(base_url('/Loginsignup/newPassword'));
+        }
+    }
+    public function checkPasswordStatus()
+    {
+        $email = $this->input->post('email');
+
+        $user = $this->M_login->get_user_by_email($email);
+
+        if ($user && empty($user->password)) {
+            echo json_encode(['password_empty' => true]);
+        } else {
+            echo json_encode(['password_empty' => false]);
         }
     }
     public function newPassword()
     {
-        $this->load->view('components/inc_header');
-        $this->load->view('newpassword');
-        $this->load->view('components/inc_footer');
+        if (isset($_POST["email"])) {
+            $where = [
+                'email' => $_POST["email"]
+            ];
+
+            $members = $this->M_login->getMember($where);
+            $this->session->set_userdata('user', $members);
+
+            $this->load->view('components/inc_header');
+            $this->load->view('newpassword');
+            $this->load->view('components/inc_footer');
+        } else {
+            if ($this->session->userdata('user')) {
+                $this->load->view('components/inc_header');
+                $this->load->view('newpassword');
+                $this->load->view('components/inc_footer');
+            } else {
+                redirect(base_url('/Loginsignup'));
+                // echo $_POST["email"];
+            }
+        }
+    }
+    public function setPassword()
+    {
+        // Validasi form
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
+        $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[password]');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('set_password_form');
+        } else {
+            // Jika validasi berhasil, update password
+            $password = $this->input->post('password');
+            $user_id = $this->session->userdata('user')->id; // Pastikan user_id disimpan dalam session saat login
+
+            if ($this->M_login->update_password($user_id, $password)) {
+                $this->session->set_flashdata('success', 'Password berhasil diubah');
+
+                $where = [
+                    'email' => $this->session->userdata('user')->email
+                ];
+                $members = $this->M_login->getMember($where);
+                $this->session->set_userdata('user', $members);
+
+                redirect('Loginsignup/profile'); // Ganti dengan halaman login atau halaman lain yang diinginkan
+            } else {
+                $this->session->set_flashdata('error', 'Gagal mengubah password.');
+                redirect(base_url('/Loginsignup/newPassword'));
+            }
+        }
     }
     public function updateProfile()
     {
-        $profileData = array(
-            'nama_panggilan' => $this->input->post('nama_panggilan'),
-            'telp' => $this->input->post('telp'),
-            'pekerjaan' => $this->input->post('pekerjaan'),
-            'alamat' => $this->input->post('alamat'),
-            'pendidikan_terakhir' => $this->input->post('pendidikan_terakhir'),
-            'jumlah_anggota_keluarga' => $this->input->post('jumlah_anggota_keluarga'),
-            'nama_keluarga' => $this->input->post('nama_keluarga'),
-            'status_keluarga' => $this->input->post('status_keluarga'),
-            'telp_keluarga' => $this->input->post('telp_keluarga')
-        );
+        if ($this->session->userdata('user')) {
+            $profileData = array(
+                'nama_panggilan' => $this->input->post('nama_panggilan'),
+                'telp' => $this->input->post('telp'),
+                'pekerjaan' => $this->input->post('pekerjaan'),
+                'alamat' => $this->input->post('alamat'),
+                'pendidikan_terakhir' => $this->input->post('pendidikan_terakhir'),
+                'jumlah_anggota_keluarga' => $this->input->post('jumlah_anggota_keluarga'),
+                'nama_keluarga' => $this->input->post('nama_keluarga'),
+                'status_keluarga' => $this->input->post('status_keluarga'),
+                'telp_keluarga' => $this->input->post('telp_keluarga')
+            );
 
-        // Panggil model untuk melakukan pembaruan profil
+            $this->M_login->updateProfile($profileData);
+            $where = ['id' => $this->session->userdata('user')->id];
+            $members =  $this->M_login->getMember($where);
+            $this->session->set_userdata('user', $members);
 
-        $this->M_login->updateProfile($profileData);
-        $where = ['id' => $this->session->userdata('user')->id];
-        $members =  $this->M_login->getMember($where);
-        $this->session->set_userdata('user', $members);
-        // print_r($this->session->userdata('user'));
-        redirect(base_url('/Loginsignup/profile'));
+            redirect(base_url('/Loginsignup/profile'));
+        } else {
+            redirect(base_url('/Loginsignup'));
+        }
     }
     public function test()
     {
@@ -142,9 +202,12 @@ class Loginsignup extends MY_Controller
 
             if ($this->M_login->register($data)) {
                 $this->session->set_flashdata('success', 'Registration successful. You can now login.');
-                $this->load->view('components/inc_header');
-                $this->load->view('newassword');
-                $this->load->view('components/inc_footer');
+
+                $where = ['email' => $data['email']];
+                $members = $this->M_login->getMember($where);
+                $this->session->set_userdata('user', $members);
+
+                redirect(base_url('/Loginsignup/newPassword'));
             } else {
                 $this->session->set_flashdata('error', 'Registration failed. Please try again.');
                 echo 'gagal';
