@@ -15,14 +15,14 @@
                         <button type="button" class="btn btn-primary" id="toggleEdit">Edit Profile</button>
                     </div>
                     <div class="card-body">
-                        <!-- Form Group (username)-->
+                        <!-- Form Group (email)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Email</label>
                             <input class="form-control  disabled-permanent" id="inputUsername" type="email" placeholder="Masukkan email" name="email" value="<?php echo $profile->email ?>" disabled>
                         </div>
                         <!-- Form Row-->
                         <div class="row gx-3 mb-3">
-                            <!-- Form Group (first name)-->
+                            <!-- Form Group (nama)-->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputFirstName">Nama lengkap</label>
                                 <input class="form-control disabled-permanent" id="inputFirstName" type="text" placeholder="Masukkan nama lengkap" name="nama_lengkap" value="<?php echo $profile->nama_lengkap ?>" disabled>
