@@ -2,7 +2,7 @@
     <!-- Account page navigation-->
     <div class="nav nav-borders">
         <a class="nav-link active ms-0" href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details" target="__blank">Profile</a>
-        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-billing-page" target="__blank">Infaq</a>
+        <a class="nav-link" href="<?php echo base_url('Pembayaran') ?>">Infaq</a>
     </div>
     <hr class="mt-0 mb-4">
     <div class="row">

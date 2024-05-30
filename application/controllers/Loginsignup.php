@@ -152,7 +152,7 @@ class Loginsignup extends MY_Controller
     }
     public function test()
     {
-        print_r($this->session->userdata('user'));
+        $this->load->view('test');
     }
 
     public function logout()

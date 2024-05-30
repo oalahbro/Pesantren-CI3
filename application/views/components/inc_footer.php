@@ -1,5 +1,5 @@
 </div>
-<div id="contact">
+<div id="contact" class="pb-0">
     <div class="wrapper">
         <div class="footer">
             <div class="footer-section">
@@ -20,13 +20,17 @@
             </div>
         </div>
     </div>
-</div>
+    <div style="background-color: rgba(0, 0, 0, 0.3)">
+        <footer class="text-white py-3">
+            <div class="wrapper">
+                <p class="text-center ">© 2016. <b>Wahdi Center</b> Hak Cipta.</p>
 
-<div id="copyright">
-    <div class="wrapper">
-        &copy; 2016. <b>Wahdi Center</b> Hak Cipta.
+            </div>
+        </footer>
     </div>
 </div>
+
+
 
 </body>
 
