@@ -29,48 +29,7 @@
 </div>
 
 </body>
-<script>
-    $(document).ready(function() {
-        var initialData = {};
-        $('#editForm input').each(function() {
-            initialData[$(this).attr('id')] = $(this).val();
-        });
 
-        $('#toggleEdit').click(function() {
-            $('#editForm input:not(.disabled-permanent)').prop('disabled', function(i, val) {
-                return !val;
-            });
-            $('#submitButton').toggle();
-            $(this).toggleClass('btn-primary btn-secondary');
-        });
-
-        // Cek perubahan pada setiap input
-        $('#editForm input').on('input', function() {
-            var changed = false;
-            // Bandingkan nilai input dengan nilai awal
-            if ($(this).val() !== initialData[$(this).attr('id')]) {
-                changed = true;
-            }
-
-            // Aktifkan tombol "Save changes" jika ada perubahan
-            if (changed) {
-                $('#submitButton').show();
-            } else {
-                $('#submitButton').hide();
-            }
-        });
-
-        $('#editForm').submit(function() {
-            // Lakukan submit hanya jika tombol "Save changes" aktif
-            if ($('#submitButton').is(':visible')) {
-                return true;
-            } else {
-                alert('No changes detected.'); // Ubah atau hapus ini sesuai kebutuhan Anda
-                return false; // Blokir submit jika tidak ada perubahan
-            }
-        });
-    });
-</script>
 
 
 </html>
