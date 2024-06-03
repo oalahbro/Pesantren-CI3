@@ -118,7 +118,7 @@ CREATE TABLE `members` (
   `status_keluarga` varchar(45) NOT NULL,
   `telp_keluarga` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +127,7 @@ CREATE TABLE `members` (
 
 LOCK TABLES `members` WRITE;
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
-INSERT INTO `members` VALUES (2,'dirumahrafif@gmail.com','Di Rumahrafif','c33367701511b4f6020ec61ded352059','1','','2021-04-09 00:00:58','','','0','','','','','',''),(3,'epradana15@gmail.com','eka pradana','e10adc3949ba59abbe56e057f20f883e','1',NULL,'2024-05-17 15:57:41','eka','bekasi','62895338221298','owner','smk','2','apa ya','gatau','6287876776');
+INSERT INTO `members` VALUES (2,'dirumahrafif@gmail.com','Di Rumahrafif','c33367701511b4f6020ec61ded352059','1','','2021-04-09 00:00:58','','','0','','','','','',''),(3,'epradana15@gmail.com','ekahhhhhhhh','e10adc3949ba59abbe56e057f20f883e','1',NULL,'2024-05-17 15:57:41','OKE1','rt 1 rw 1','62895338221298','ownera','smk','2','apa ya','gatau','6287876776'),(6,'epradana1111@gmail.com','eka pradana','0192023a7bbd73250516f069df18b500','23',NULL,'2024-05-28 14:44:30','ekaa','rt 1 rw 1','0895338331298','kuli','asd','11','11','ss','11'),(7,'epradana125@gmail.com','eka pradana','0192023a7bbd73250516f069df18b500','23',NULL,'2024-05-28 14:45:13','ekaa','rt 1 rw 1','0895338331298','kuli','asd','11','asdasd','','1'),(8,'epradana215@gmail.com','eka pradana','6bbe5eaa9b787ca6ae1730ef700eebe7','belum',NULL,'2024-05-29 12:36:18','ekaa1','rt 1 rw 1','0895338331298','ownera','asd','1','asdasd','','2');
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,6 +156,33 @@ LOCK TABLES `partners` WRITE;
 /*!40000 ALTER TABLE `partners` DISABLE KEYS */;
 INSERT INTO `partners` VALUES (1,'UIN Sunan Kalijaga','partners_1617496652_uin.jpg','<p>UIN Sunan Kalijaga<br></p>','2021-04-04 00:37:32'),(2,'UGM','partners_1617496676_ugm.jpg','<p>UGM</p>','2021-04-04 00:37:56'),(3,'UMY','partners_1617496689_umy.png','<p>UMY</p>','2021-04-04 00:38:09'),(4,'UNY','partners_1617496703_uny.png','<p>UNY</p>','2021-04-04 00:38:23'),(5,'UAD','partners_1617496716_uad.png','<p>UAD</p>','2021-04-04 00:38:36'),(7,'UPN','partners_1617496766_upn.png','<p>UPN</p>','2021-04-04 00:39:26');
 /*!40000 ALTER TABLE `partners` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pembayaran`
+--
+
+DROP TABLE IF EXISTS `pembayaran`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pembayaran` (
+  `id` int(11) NOT NULL,
+  `id_member` int(11) NOT NULL,
+  `tgl_bayar` datetime NOT NULL,
+  `total_bayar` decimal(9,0) NOT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pembayaran`
+--
+
+LOCK TABLES `pembayaran` WRITE;
+/*!40000 ALTER TABLE `pembayaran` DISABLE KEYS */;
+INSERT INTO `pembayaran` VALUES (0,3,'2024-05-30 00:00:00',10000,0);
+/*!40000 ALTER TABLE `pembayaran` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -194,4 +221,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-23 21:08:12
+-- Dump completed on 2024-05-30 23:31:01
