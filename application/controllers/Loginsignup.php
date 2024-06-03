@@ -158,7 +158,7 @@ class Loginsignup extends MY_Controller
     public function logout()
     {
         $this->session->sess_destroy();
-        redirect('Loginsignup');
+        redirect(base_url('Loginsignup'));
     }
 
     public function register()
