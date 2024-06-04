@@ -166,13 +166,15 @@ DROP TABLE IF EXISTS `pembayaran`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pembayaran` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_member` int(11) NOT NULL,
   `tgl_bayar` datetime NOT NULL,
   `total_bayar` decimal(9,0) NOT NULL,
   `status` int(11) NOT NULL,
+  `bukti_bayar` varchar(45) NOT NULL,
+  `notes` varchar(145) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +183,7 @@ CREATE TABLE `pembayaran` (
 
 LOCK TABLES `pembayaran` WRITE;
 /*!40000 ALTER TABLE `pembayaran` DISABLE KEYS */;
-INSERT INTO `pembayaran` VALUES (0,3,'2024-05-30 00:00:00',10000,0);
+INSERT INTO `pembayaran` VALUES (1,3,'2024-05-30 00:00:00',10000,0,'',''),(2,6,'2024-06-03 00:00:00',500000,0,'',''),(3,6,'2024-06-04 00:00:00',200000,0,'1717521121.png','0');
 /*!40000 ALTER TABLE `pembayaran` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,4 +223,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-30 23:31:01
+-- Dump completed on 2024-06-05  0:20:20
