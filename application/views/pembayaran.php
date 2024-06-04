@@ -28,6 +28,10 @@
                     <label for="paymentAmount" class="form-label">Nominal Pembayaran</label>
                     <input type="number" class="form-control" id="paymentAmount" name="paymentAmount" placeholder="Masukkan nominal pembayaran" required>
                 </div>
+                <div class="mb-3">
+                    <label for="buktipembayaran" class="form-label">Bukti Pembayaran</label>
+                    <input type="file" class="form-control" id="buktipembayaran" name="buktipembayaran" placeholder="Masukkan nominal pembayaran" required>
+                </div>
                 <button type="submit" class="btn btn-primary">Bayar</button>
             </form>
         </div>
