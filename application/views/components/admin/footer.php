@@ -1,5 +1,6 @@
 <!-- General JS Scripts -->
-<script src="<?php echo base_url("assets/admin/assets/bootstrap/jquery-3.3.1.min.js") ?>"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script src="<?php echo base_url("assets/admin/assets/bootstrap/popper.min.js") ?>"></script>
 <script src=" <?php echo base_url("assets/admin/assets/bootstrap/bootstrap.min.js") ?>"></script>
 <script src="<?php echo base_url("assets/admin/assets/bootstrap/jquery.nicescroll.min.js") ?>"></script>

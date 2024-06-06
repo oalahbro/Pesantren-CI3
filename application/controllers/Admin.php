@@ -77,4 +77,69 @@ class Admin extends CI_Controller
         $this->session->sess_destroy();
         redirect(base_url('Admin'));
     }
+
+    public function pembayaran()
+    {
+        if ($this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+            $data['anggota'] = $this->M_admin->get_all();
+
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/pembayaran', $data);
+        }
+    }
+
+    public function approval()
+    {
+        if ($this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+            // $data['anggota'] = $this->M_admin->get_all();
+
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/approval');
+        }
+    }
+
+    public function fetch_pending_pembayaran()
+    {
+        $perPage = 10;
+        $page = $this->input->get('page') ? $this->input->get('page') : 1;
+        $search = $this->input->get('search') ? $this->input->get('search') : '';
+
+        $totalRecords = $this->M_admin->count_records_pending($search);
+        $totalPages = ceil($totalRecords / $perPage);
+
+        $offset = ($page - 1) * $perPage;
+
+        $data['results'] = $this->M_admin->get_records_pending($search, $perPage, $offset);
+        $data['totalPages'] = $totalPages;
+
+        $output = '';
+        $no = ($page - 1) * $perPage + 1; // Calculate initial numbering for the current page
+
+        foreach ($data['results'] as $row) {
+            $formatted_jumlah_bayar = 'Rp ' . number_format($row['total_bayar'], 0, ',', '.');
+
+            $output .= '<tr>';
+            $output .= '<td>' . $no . '</td>';
+            $output .= '<td>' . $row['nama_lengkap'] . '</td>';
+            $output .= '<td>' . $formatted_jumlah_bayar . '</td>';
+            $output .= '<td><button class="btn btn-info view-bukti" data-bukti="' . base_url('assets/uploads/') . $row['bukti_bayar'] . '">Lihat Bukti Bayar</button></td>';
+            $output .= '<td>';
+            $output .= '<button class="btn btn-success accept" data-id="' .  $row['id'] . '">Accept</button>';
+            $output .= '<button class="btn btn-danger reject" data-id="' . $row['id'] . '">Reject</button>';
+            $output .= '</td>';
+            $output .= '</tr>';
+            $no++; // Increment numbering for the next row
+        }
+
+        // Output the HTML content along with the total pages
+        echo json_encode(array('html' => $output, 'totalPages' => $totalPages));
+    }
 }

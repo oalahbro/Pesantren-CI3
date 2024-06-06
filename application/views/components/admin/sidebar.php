@@ -34,13 +34,13 @@
             <li>
               <a href="<?php echo base_url('Admin/dashboard') ?>" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
-            <li class="menu-header">Data</li>
-            <li><a class="nav-link" href="kelas.php"><i class="fas fa-database"></i> <span>DATA KELAS</span></a></li>
+            <li class="menu-header">Approval</li>
+            <li><a class="nav-link" href="<?php echo base_url('Admin/approval') ?>"><i class="fas fa-database"></i> <span>PENDING PEMBAYARAN</span></a></li>
             <li class="menu-header">Personal</li>
-            <li><a class="nav-link" href="petugas.php"><i class="fas fa-user-edit"></i> <span>PETUGAS</span></a></li>
-            <li><a class="nav-link" href="siswa.php"><i class="fas fa-user-graduate"></i> <span>SISWA</span></a></li>
+            <li><a class="nav-link" href="petugas.php"><i class="fas fa-user-edit"></i> <span>ANGGOTA</span></a></li>
+            <li><a class="nav-link" href="siswa.php"><i class="fas fa-user-graduate"></i> <span>RIWAYAT PEMBAYARAN</span></a></li>
             <li class="menu-header">Fitur</li>
-            <li><a class="nav-link" href="transaksi.php"><i class="fas fa-money-check-alt"></i> <span>TRANSAKSI PEMBAYARAN</span></a></li>
+            <li><a class="nav-link" href="<?php echo base_url('admin/pembayaran') ?>"><i class="fas fa-money-check-alt"></i> <span>PEMBAYARAN</span></a></li>
             <li><a class="nav-link" href="laporan.php"><i class="fas fa-book"></i> <span>LAPORAN</span></a></li>
         </aside>
       </div>

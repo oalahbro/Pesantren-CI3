@@ -70,4 +70,32 @@ class M_admin extends CI_Model
 
         return $query->result_array();
     }
+    public function get_all()
+    {
+        $query = $this->db->get('members');
+        return $query->result();
+    }
+    public function count_records_pending($search)
+    {
+        $this->db->select('COUNT(*) AS total');
+        $this->db->from('pembayaran');
+        $this->db->join('members', 'pembayaran.id_member = members.id');
+        $this->db->like('members.nama_lengkap', $search);
+        $this->db->or_like('members.email', $search);
+        $totalRecordsRow = $this->db->get()->row_array();
+        return $totalRecordsRow['total'];
+    }
+
+    public function get_records_pending($search, $perPage, $offset)
+    {
+        $this->db->select('pembayaran.*, members.nama_lengkap');
+        $this->db->from('pembayaran');
+        $this->db->join('members', 'pembayaran.id_member = members.id');
+        $this->db->like('members.nama_lengkap', $search);
+        $this->db->or_like('members.email', $search);
+        $this->db->or_like('pembayaran.total_bayar', $search);
+        $this->db->order_by('pembayaran.id', 'ASC');
+        $this->db->limit($perPage, $offset);
+        return $this->db->get()->result_array();
+    }
 }

@@ -62,10 +62,12 @@
                                     <button class="btn btn-warning">Lunas</button>
                                 <?php endif; ?>
                             </td>
-                            <td>
-                                <button class="btn btn-link bukti-bayar" data-image-url="<?php echo base_url('assets/uploads/' . $payment->bukti_bayar); ?>">
-                                    Lihat Bukti
-                                </button>
+                            <td><?php if ($payment->bukti_bayar) { ?>
+                                    <button class="btn btn-link bukti-bayar" data-image-url="<?php echo base_url('assets/uploads/' . $payment->bukti_bayar); ?>">
+                                        Lihat Bukti
+                                    </button>
+                                <?php } else {
+                                } ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
