@@ -130,7 +130,12 @@ class Admin extends CI_Controller
             $output .= '<td>' . $no . '</td>';
             $output .= '<td>' . $row['nama_lengkap'] . '</td>';
             $output .= '<td>' . $formatted_jumlah_bayar . '</td>';
-            $output .= '<td><button class="btn btn-info view-bukti" data-bukti="' . base_url('assets/uploads/') . $row['bukti_bayar'] . '">Lihat Bukti Bayar</button></td>';
+            if ($row['bukti_bayar']) {
+                $output .= '<td><button class="btn btn-info view-bukti" data-bukti="' . base_url('assets/uploads/') . $row['bukti_bayar'] . '">Lihat Bukti Bayar</button></td>';
+            } else {
+                $output .= '<td><button class="btn btn-secondary" disabled>Tidak ada Bukti bayar</button></td>';
+            }
+
             $output .= '<td>';
             $output .= '<button class="btn btn-success accept" data-id="' .  $row['id'] . '">Accept</button>';
             $output .= '<button class="btn btn-danger reject" data-id="' . $row['id'] . '">Reject</button>';
@@ -141,5 +146,29 @@ class Admin extends CI_Controller
 
         // Output the HTML content along with the total pages
         echo json_encode(array('html' => $output, 'totalPages' => $totalPages));
+    }
+
+    public function proses_accept_reject()
+    {
+        $id_pembayaran = $this->input->post('id_pembayaran');
+        $action = $this->input->post('action');
+
+        // Tentukan status berdasarkan action
+        $status = '';
+        if ($action === 'accept') {
+            $status = 'accepted';
+        } else if ($action === 'reject') {
+            $status = 'rejected';
+        } else {
+            echo json_encode(array('success' => false, 'message' => 'Invalid action.'));
+            return;
+        }
+
+        // Update status pembayaran
+        if ($this->M_admin->update_status_pembayaran($id_pembayaran, $status)) {
+            echo json_encode(array('success' => true, 'message' => 'Pembayaran berhasil diupdate.'));
+        } else {
+            echo json_encode(array('success' => false, 'message' => 'Gagal mengupdate pembayaran.'));
+        }
     }
 }

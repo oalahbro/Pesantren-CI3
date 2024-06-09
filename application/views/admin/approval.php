@@ -177,13 +177,14 @@
 
             // Lakukan AJAX request untuk proses accept/reject
             $.ajax({
-                url: 'proses_accept_reject.php',
+                url: '<?php echo base_url('admin/proses_accept_reject') ?>',
                 method: 'POST',
                 data: {
                     id_pembayaran: id_pembayaran,
                     action: action
                 },
                 success: function(response) {
+                    response = JSON.parse(response);
                     // Tampilkan pesan sukses atau error
                     alert(response.message);
 

@@ -80,8 +80,11 @@ class M_admin extends CI_Model
         $this->db->select('COUNT(*) AS total');
         $this->db->from('pembayaran');
         $this->db->join('members', 'pembayaran.id_member = members.id');
+        $this->db->where('pembayaran.status', 0); // Kondisi untuk pembayaran pending
+        $this->db->group_start();
         $this->db->like('members.nama_lengkap', $search);
         $this->db->or_like('members.email', $search);
+        $this->db->group_end();
         $totalRecordsRow = $this->db->get()->row_array();
         return $totalRecordsRow['total'];
     }
@@ -91,11 +94,30 @@ class M_admin extends CI_Model
         $this->db->select('pembayaran.*, members.nama_lengkap');
         $this->db->from('pembayaran');
         $this->db->join('members', 'pembayaran.id_member = members.id');
+        $this->db->where('pembayaran.status', 0); // Kondisi untuk pembayaran pending
+        $this->db->group_start();
         $this->db->like('members.nama_lengkap', $search);
         $this->db->or_like('members.email', $search);
         $this->db->or_like('pembayaran.total_bayar', $search);
+        $this->db->group_end();
         $this->db->order_by('pembayaran.id', 'ASC');
         $this->db->limit($perPage, $offset);
         return $this->db->get()->result_array();
+    }
+
+    public function update_status_pembayaran($id_pembayaran, $status)
+    {
+        $this->db->where('id', $id_pembayaran);
+
+        if ($status == 'accept') {
+            $this->db->update('pembayaran', array('status' => '1'));
+        } else {
+            $this->db->update('pembayaran', array('status' => '2'));
+        }
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
