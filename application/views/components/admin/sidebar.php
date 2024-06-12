@@ -37,7 +37,7 @@
             <li class="menu-header">Approval</li>
             <li><a class="nav-link" href="<?php echo base_url('Admin/approval') ?>"><i class="fas fa-database"></i> <span>PENDING PEMBAYARAN</span></a></li>
             <li class="menu-header">Personal</li>
-            <li><a class="nav-link" href="petugas.php"><i class="fas fa-user-edit"></i> <span>ANGGOTA</span></a></li>
+            <li><a class="nav-link" href="<?php echo base_url('Admin/anggota') ?>"><i class="fas fa-user-edit"></i> <span>ANGGOTA</span></a></li>
             <li><a class="nav-link" href="siswa.php"><i class="fas fa-user-graduate"></i> <span>RIWAYAT PEMBAYARAN</span></a></li>
             <li class="menu-header">Fitur</li>
             <li><a class="nav-link" href="<?php echo base_url('admin/pembayaran') ?>"><i class="fas fa-money-check-alt"></i> <span>PEMBAYARAN</span></a></li>

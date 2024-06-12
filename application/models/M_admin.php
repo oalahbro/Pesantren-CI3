@@ -120,4 +120,32 @@ class M_admin extends CI_Model
             return false;
         }
     }
+
+    public function count_records_anggota($search)
+    {
+        $this->db->select('COUNT(*) AS total');
+        $this->db->from('members');
+        $totalRecordsRow = $this->db->get()->row_array();
+        return $totalRecordsRow['total'];
+    }
+
+    public function get_records_anggota($search, $perPage, $offset)
+    {
+        $this->db->select('members.*, members.nama_lengkap');
+        $this->db->from('members');
+        $this->db->group_start();
+        $this->db->like('members.nama_lengkap', $search);
+        $this->db->or_like('members.nama_panggilan', $search);
+        $this->db->or_like('members.email', $search);
+        $this->db->or_like('members.alamat', $search);
+        $this->db->group_end();
+        $this->db->order_by('members.id', 'ASC');
+        $this->db->limit($perPage, $offset);
+        return $this->db->get()->result_array();
+    }
+    public function get_anggota_by_id($id_anggota)
+    {
+        $query = $this->db->get_where('members', array('id' => $id_anggota));
+        return $query->row_array();
+    }
 }

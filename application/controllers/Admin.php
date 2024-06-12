@@ -171,4 +171,58 @@ class Admin extends CI_Controller
             echo json_encode(array('success' => false, 'message' => 'Gagal mengupdate pembayaran.'));
         }
     }
+
+    public function anggota()
+    {
+        if ($this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/anggota');
+        }
+    }
+
+    public function fetch_anggota()
+    {
+        $perPage = 10;
+        $page = $this->input->get('page') ? $this->input->get('page') : 1;
+        $search = $this->input->get('search') ? $this->input->get('search') : '';
+
+        $totalRecords = $this->M_admin->count_records_anggota($search);
+        $totalPages = ceil($totalRecords / $perPage);
+
+        $offset = ($page - 1) * $perPage;
+
+        $data['results'] = $this->M_admin->get_records_anggota($search, $perPage, $offset);
+        $data['totalPages'] = $totalPages;
+
+        $output = '';
+        $no = ($page - 1) * $perPage + 1; // Calculate initial numbering for the current page
+
+        foreach ($data['results'] as $row) {
+
+            $output .= '<tr>';
+            $output .= '<td>' . $no . '</td>';
+            $output .= '<td>' . $row['nama_lengkap'] . '</td>';
+            $output .= '<td>' . $row['nama_panggilan'] . '</td>';
+            $output .= '<td>' . $row['email'] . '</td>';
+            $output .= '<td>' . $row['alamat'] . '</td>';
+            $output .= '<td>';
+            $output .= '<button class="btn btn-info details-button" data-id="' .  $row['id'] . '">Detail</button>';
+            $output .= '</td>';
+            $output .= '</tr>';
+            $no++; // Increment numbering for the next row
+        }
+
+        // Output the HTML content along with the total pages
+        echo json_encode(array('html' => $output, 'totalPages' => $totalPages));
+    }
+    public function get_anggota_details()
+    {
+        $id_anggota = $this->input->post('id_members');
+        $data = $this->M_admin->get_anggota_by_id($id_anggota);
+        echo json_encode($data);
+    }
 }
