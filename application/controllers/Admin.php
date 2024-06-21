@@ -250,4 +250,54 @@ class Admin extends CI_Controller
             redirect(base_url('Admin'));
         }
     }
+    public function fetch_history_pembayaran()
+    {
+        $perPage = 10;
+        $page = $this->input->get('page') ? $this->input->get('page') : 1;
+        $search = $this->input->get('search') ? $this->input->get('search') : '';
+
+        $totalRecords = $this->M_admin->count_all_payment_history($search);
+        $totalPages = ceil($totalRecords / $perPage);
+
+        $offset = ($page - 1) * $perPage;
+
+        $data['results'] = $this->M_admin->get_payment_history($search, $perPage, $offset);
+        $data['totalPages'] = $totalPages;
+
+        $output = '';
+        $no = ($page - 1) * $perPage + 1; // Calculate initial numbering for the current page
+
+        foreach ($data['results'] as $row) {
+            if ($row['tgl_bayar'] == 0) {
+                $status = '<button class="btn btn-outline-warning">Pending</button>';
+            } else {
+                $status = '<button class="btn btn-warning">Lunas</button>';
+            }
+
+            $formatted_jumlah_bayar = 'Rp ' . number_format($row['total_bayar'], 0, ',', '.');
+            $output .= '<tr>';
+            $output .= '<td>' . $no . '</td>';
+            $output .= '<td>' . $row['nama_lengkap'] . '</td>';
+            $output .= '<td>' . $formatted_jumlah_bayar . '</td>';
+            $output .= '<td>' . date('d - F - Y', strtotime($row['tgl_bayar'])) . '</td>';
+            $output .= '<td>' . $status . '</td>';
+            $output .= '</tr>';
+            $no++; // Increment numbering for the next row
+        }
+
+        // Output the HTML content along with the total pages
+        echo json_encode(array('html' => $output, 'totalPages' => $totalPages));
+    }
+    public function history()
+    {
+        if (!$this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/history');
+        }
+    }
 }

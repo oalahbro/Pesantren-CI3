@@ -154,4 +154,32 @@ class M_admin extends CI_Model
         return $this->db->update('members', $profileData); // Ganti 'users' dengan nama tabel profil Anda
 
     }
+    public function get_payment_history($search = '', $perPage = 10, $offset = 0)
+    {
+        $this->db->select('pembayaran.*, members.nama_lengkap');
+        $this->db->from('pembayaran');
+        $this->db->join('members', 'pembayaran.id_member = members.id');
+        $this->db->group_start();
+        $this->db->like('members.nama_lengkap', $search);
+        $this->db->or_like('members.email', $search);
+        $this->db->or_like('pembayaran.total_bayar', $search);
+        $this->db->group_end();
+        $this->db->order_by('pembayaran.tgl_bayar', 'DESC');
+        $this->db->limit($perPage, $offset);
+        return $this->db->get()->result_array();
+    }
+
+    public function count_all_payment_history($search = '')
+    {
+        $this->db->select('COUNT(*) AS total');
+        $this->db->from('pembayaran');
+        $this->db->join('members', 'pembayaran.id_member = members.id');
+        $this->db->group_start();
+        $this->db->like('members.nama_lengkap', $search);
+        $this->db->or_like('members.email', $search);
+        $this->db->or_like('pembayaran.total_bayar', $search);
+        $this->db->group_end();
+        $query = $this->db->get();
+        return $query->row()->total;
+    }
 }
