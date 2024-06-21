@@ -16,6 +16,11 @@
                             </form>
                         </div>
                     </div>
+                    <?php if ($this->session->flashdata('message')) : ?>
+                        <div class="alert alert-success">
+                            <?php echo $this->session->flashdata('message'); ?>
+                        </div>
+                    <?php endif; ?>
                     <div class="card-body p-0 ">
                         <div class="col-md-12">
                             <div class="table-responsive ">
@@ -73,7 +78,8 @@
                         <span class="sr-only">Loading...</span>
                     </div>
                 </div>
-                <form id="editForm" action="<?php echo base_url('Loginsignup/updateProfile'); ?>" method="post">
+                <form id="editForm" action="<?php echo base_url('Admin/updateAnggota'); ?>" method="post">
+                    <input type="text" id="idanggota" name="idanggota" value="" disabled hidden>
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="modal-title" id="confirmModalLabel">Account Details</h5>
                         <button type="button" class="btn btn-primary" id="toggleEdit">Edit Profile</button>
@@ -246,6 +252,7 @@
                 },
                 dataType: 'json',
                 success: function(response) {
+                    $('#idanggota').val(response.id);
                     $('#inputUsername').val(response.email);
                     $('#inputFirstName').val(response.nama_lengkap);
                     $('#inputLastName').val(response.nama_panggilan);

@@ -148,4 +148,10 @@ class M_admin extends CI_Model
         $query = $this->db->get_where('members', array('id' => $id_anggota));
         return $query->row_array();
     }
+    public function updateAnggota($profileData)
+    {
+        $this->db->where('id', $profileData['id']); // Misalnya, sesuai dengan id user saat ini
+        return $this->db->update('members', $profileData); // Ganti 'users' dengan nama tabel profil Anda
+
+    }
 }

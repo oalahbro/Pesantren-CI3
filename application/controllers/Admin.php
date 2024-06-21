@@ -227,8 +227,9 @@ class Admin extends CI_Controller
     }
     public function updateAnggota()
     {
-        if ($this->session->userdata('user')) {
+        if ($this->session->userdata('admin')) {
             $profileData = array(
+                'id' => $this->input->post('idanggota'),
                 'nama_panggilan' => $this->input->post('nama_panggilan'),
                 'telp' => $this->input->post('telp'),
                 'pekerjaan' => $this->input->post('pekerjaan'),
@@ -239,15 +240,14 @@ class Admin extends CI_Controller
                 'status_keluarga' => $this->input->post('status_keluarga'),
                 'telp_keluarga' => $this->input->post('telp_keluarga')
             );
-
-            $this->M_login->updateProfile($profileData);
-            $where = ['id' => $this->session->userdata('user')->id];
-            $members =  $this->M_login->getMember($where);
-            $this->session->set_userdata('user', $members);
-
-            redirect(base_url('/Loginsignup/profile'));
+            if ($this->M_admin->updateAnggota($profileData)) {
+                $this->session->set_flashdata('message', 'Profil <b>' . $profileData['nama_panggilan'] . '</b> berhasil disimpan.');
+            } else {
+                $this->session->set_flashdata('message', 'Terjadi kesalahan. Silakan coba lagi.');
+            }
+            redirect(base_url('/Admin/anggota'));
         } else {
-            redirect(base_url('/Loginsignup'));
+            redirect(base_url('Admin'));
         }
     }
 }
