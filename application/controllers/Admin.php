@@ -30,7 +30,7 @@ class Admin extends CI_Controller
                 'admin_username' => $admin->username,
                 'logged_in' => TRUE
             );
-            $this->session->set_userdata($admin_data);
+            $this->session->set_userdata('admin', $admin_data);
 
             redirect(base_url('Admin/dashboard')); // Redirect ke dashboard jika login berhasil
         } else {
@@ -58,7 +58,7 @@ class Admin extends CI_Controller
 
     public function dashboard()
     {
-        if ($this->session->userdata('admin')) {
+        if (!$this->session->userdata('admin')) {
             redirect(base_url('Admin'));
         } else {
             $data['total_members'] = $this->M_admin->countTotalMembers();
@@ -80,7 +80,7 @@ class Admin extends CI_Controller
 
     public function pembayaran()
     {
-        if ($this->session->userdata('admin')) {
+        if (!$this->session->userdata('admin')) {
             redirect(base_url('Admin'));
         } else {
             $data['anggota'] = $this->M_admin->get_all();
@@ -94,7 +94,7 @@ class Admin extends CI_Controller
 
     public function approval()
     {
-        if ($this->session->userdata('admin')) {
+        if (!$this->session->userdata('admin')) {
             redirect(base_url('Admin'));
         } else {
             // $data['anggota'] = $this->M_admin->get_all();
@@ -174,7 +174,7 @@ class Admin extends CI_Controller
 
     public function anggota()
     {
-        if ($this->session->userdata('admin')) {
+        if (!$this->session->userdata('admin')) {
             redirect(base_url('Admin'));
         } else {
             $this->load->view('components/admin/header');
@@ -224,5 +224,30 @@ class Admin extends CI_Controller
         $id_anggota = $this->input->post('id_members');
         $data = $this->M_admin->get_anggota_by_id($id_anggota);
         echo json_encode($data);
+    }
+    public function updateAnggota()
+    {
+        if ($this->session->userdata('user')) {
+            $profileData = array(
+                'nama_panggilan' => $this->input->post('nama_panggilan'),
+                'telp' => $this->input->post('telp'),
+                'pekerjaan' => $this->input->post('pekerjaan'),
+                'alamat' => $this->input->post('alamat'),
+                'pendidikan_terakhir' => $this->input->post('pendidikan_terakhir'),
+                'jumlah_anggota_keluarga' => $this->input->post('jumlah_anggota_keluarga'),
+                'nama_keluarga' => $this->input->post('nama_keluarga'),
+                'status_keluarga' => $this->input->post('status_keluarga'),
+                'telp_keluarga' => $this->input->post('telp_keluarga')
+            );
+
+            $this->M_login->updateProfile($profileData);
+            $where = ['id' => $this->session->userdata('user')->id];
+            $members =  $this->M_login->getMember($where);
+            $this->session->set_userdata('user', $members);
+
+            redirect(base_url('/Loginsignup/profile'));
+        } else {
+            redirect(base_url('/Loginsignup'));
+        }
     }
 }
