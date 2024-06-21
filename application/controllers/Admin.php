@@ -156,7 +156,7 @@ class Admin extends CI_Controller
         // Tentukan status berdasarkan action
         $status = '';
         if ($action === 'accept') {
-            $status = 'accepted';
+            $status = 'accept';
         } else if ($action === 'reject') {
             $status = 'rejected';
         } else {

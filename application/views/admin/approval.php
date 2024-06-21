@@ -187,7 +187,6 @@
                     response = JSON.parse(response);
                     // Tampilkan pesan sukses atau error
                     alert(response.message);
-
                     // Refresh tabel pembayaran jika berhasil
                     if (response.success) {
                         location.reload();
