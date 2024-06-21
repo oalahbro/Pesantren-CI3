@@ -268,10 +268,12 @@ class Admin extends CI_Controller
         $no = ($page - 1) * $perPage + 1; // Calculate initial numbering for the current page
 
         foreach ($data['results'] as $row) {
-            if ($row['tgl_bayar'] == 0) {
+            if ($row['status'] == 0) {
                 $status = '<button class="btn btn-outline-warning">Pending</button>';
+            } else if ($row['status'] == 1) {
+                $status = '<button class="btn btn-success">Lunas</button>';
             } else {
-                $status = '<button class="btn btn-warning">Lunas</button>';
+                $status = '<button class="btn btn-danger">Ditolak</button>';
             }
 
             $formatted_jumlah_bayar = 'Rp ' . number_format($row['total_bayar'], 0, ',', '.');
@@ -299,5 +301,41 @@ class Admin extends CI_Controller
             $this->load->view('components/admin/footer');
             $this->load->view('admin/history');
         }
+    }
+
+    public function export_to_excel()
+    {
+        // Load PhpSpreadsheet library
+        require 'vendor/autoload.php';
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Header kolom
+        $sheet->setCellValue('A1', 'ID Member');
+        $sheet->setCellValue('B1', 'Tanggal Bayar');
+        $sheet->setCellValue('C1', 'Total Bayar');
+        $sheet->setCellValue('D1', 'Status');
+
+        // Ambil data pembayaran dari database
+        $payments = $this->M_admin->get_all_payments();
+
+        // Isi data ke dalam excel
+        $row = 2; // Baris awal untuk data
+        foreach ($payments as $payment) {
+            $sheet->setCellValue('A' . $row, $payment->id_member);
+            $sheet->setCellValue('B' . $row, date('d-M-Y', strtotime($payment->tgl_bayar)));
+            $sheet->setCellValue('C' . $row, $payment->total_bayar);
+            $sheet->setCellValue('D' . $row, $payment->status == 0 ? 'Pending' : ($payment->status == 1 ? 'Lunas' : 'Ditolak'));
+            $row++;
+        }
+
+        // Set nama file dan header untuk download
+        $filename = 'Laporan_Pembayaran_' . date('Ymd') . '.xlsx';
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
     }
 }

@@ -182,4 +182,11 @@ class M_admin extends CI_Model
         $query = $this->db->get();
         return $query->row()->total;
     }
+    public function get_all_payments()
+    {
+        $this->db->select('*');
+        $this->db->from('pembayaran');
+        $query = $this->db->get();
+        return $query->result();
+    }
 }

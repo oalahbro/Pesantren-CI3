@@ -58,8 +58,10 @@
                             <td>
                                 <?php if ($payment->status == 0) : ?>
                                     <button class="btn btn-outline-warning">Pending</button>
+                                <?php elseif ($payment->status == 1) : ?>
+                                    <button class="btn btn-success">Lunas</button>
                                 <?php else : ?>
-                                    <button class="btn btn-warning">Lunas</button>
+                                    <button class="btn btn-danger">Ditolak</button>
                                 <?php endif; ?>
                             </td>
                             <td><?php if ($payment->bukti_bayar) { ?>
