@@ -17,7 +17,7 @@ class Halaman extends MY_Controller
 
             $data = $this->M_halaman->getHalaman($id);
             if ($data) {
-                $isi    = str_replace("../gambar/", "assets/gambar/", $data->isi);
+                $isi    = str_replace("../assets/gambar/", "assets/gambar/", $data->isi);
                 $data_view['halaman'] = [
                     'kutipan' => $data->kutipan,
                     'judul' => $data->judul,

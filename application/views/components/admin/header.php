@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="<?php echo base_url("assets/admin/assets/bootstrap/bootstrap.min.css") ?>">
   <link rel="stylesheet" href="<?php echo base_url("assets/admin/assets/fontawesome-free/css/all.css") ?>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="<?php echo base_url('assets/admin/assets/css/') ?>selectric.css">
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="<?php echo base_url("assets/admin/assets/css/style.css") ?>">

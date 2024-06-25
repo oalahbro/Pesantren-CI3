@@ -189,4 +189,25 @@ class M_admin extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function articel()
+    {
+        $query = $this->db->get('halaman');
+        return $query->result();
+    }
+    public function getUpdateArticel($id)
+    {
+        $query = $this->db->get_where('halaman', array('id' => $id));
+        return $query->row();
+    }
+    public function updateIsiImageHalaman($id, $isi)
+    {
+        $data = array(
+            'isi' => $isi
+        );
+
+        $this->db->where('id', $id);
+        $this->db->update('halaman', $data);
+
+        return $this->db->affected_rows(); // Mengembalikan jumlah baris yang terpengaruh
+    }
 }

@@ -338,4 +338,98 @@ class Admin extends CI_Controller
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
     }
+
+    public function post()
+    {
+        if (!$this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+            $data['articel'] = $this->M_admin->articel();
+            $parse['halaman'] = [];
+            foreach ($data['articel'] as $item) {
+                $gambar = '';
+                if (preg_match('/<img.*?src=["\'](.*?)["\']/', $item->isi, $matches)) {
+                    $gambar = $matches[1]; // Extract the image source URL
+                }
+                $gambar = str_replace("../gambar/", "../assets/gambar/", $gambar);
+
+                $parse['halaman'][] = [
+                    'id' => $item->id,
+                    'gambar' => $gambar,
+                    'kutipan' => $item->kutipan,
+                    'judul' => $item->judul,
+                    'kutipan' => $item->kutipan,
+                    'isi' => $item->isi
+                ];
+            }
+            // print_r($parse);
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/landing', $parse);
+        }
+    }
+    public function update_articel()
+    {
+        if (!$this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+            $id = $this->input->get('id');
+            $data['articel'] = $this->M_admin->getUpdateArticel($id);
+            $parse['halaman'] = [];
+            $gambar = '';
+            if (preg_match('/<img.*?src=["\'](.*?)["\']/', $data['articel']->isi, $matches)) {
+                $gambar = $matches[1]; // Extract the image source URL
+            }
+            $gambar = str_replace("../gambar/", "../assets/gambar/", $gambar);
+
+            $parse['halaman'][] = [
+                'id' => $data['articel']->id,
+                'gambar' => $gambar,
+                'kutipan' => $data['articel']->kutipan,
+                'judul' => $data['articel']->judul,
+                'kutipan' => $data['articel']->kutipan,
+                'isi' => $data['articel']->isi
+            ];
+            // print_r($parse['halaman']);
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/post', $parse);
+        }
+    }
+    public function imageUp()
+    {
+        $id = $this->input->get('id');
+        $config['upload_path'] = './assets/gambar/'; // Folder untuk menyimpan gambar
+        $config['allowed_types'] = 'jpg|jpeg|png|gif';
+        $config['max_size'] = 2048; // Ukuran maksimal gambar (2MB)
+        $config['overwrite'] = TRUE; // Memastikan gambar yang ada akan diganti
+
+        // Hapus ../assets/gambar/ dari nama file jika ada
+        $rep = str_replace("../assets/gambar/", "", $id);
+
+        // Konfigurasi nama file yang akan diunggah
+        $config['file_name'] = $rep;
+
+        // Load library upload dan konfigurasinya
+        $this->load->library('upload', $config);
+
+        // Lakukan upload gambar
+        if (!$this->upload->do_upload('file')) {
+            // Gagal upload
+            $error = array('error' => $this->upload->display_errors());
+            echo json_encode(array('success' => false, 'message' => $error['error']));
+        } else {
+            // Berhasil upload
+            $image_path = base_url('assets/gambar/' . $rep); // Path gambar yang baru diunggah
+            echo json_encode(array('success' => true, 'newImagePath' => $image_path));
+        }
+    }
+    public function test1()
+    {
+        $htmlContent = $this->M_admin->getUpdateArticel('8')->isi;
+        $newImageName = 'b7e1fd3e2bf8e2c549f4a84a53637.jpg';
+        var_dump($htmlContent);
+    }
 }

@@ -51,7 +51,7 @@ class Landing extends MY_Controller
             if (preg_match('/<img.*?src=["\'](.*?)["\']/', $item->isi, $matches)) {
                 $gambar = $matches[1]; // Extract the image source URL
             }
-            $gambar = str_replace("../gambar/", "assets/gambar/", $gambar);
+            $gambar = str_replace("../assets/gambar/", "assets/gambar/", $gambar);
 
             $judul  = $this->bersihkan_judul($item->judul);
             $url = "halaman?id=$item->id/$judul";
