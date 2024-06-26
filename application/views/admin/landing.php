@@ -9,6 +9,11 @@
                     <div class="card-header">
                         <h4>POST</h4>
                     </div>
+                    <?php if ($this->session->flashdata('message')) : ?>
+                        <div class="alert alert-success">
+                            <?php echo $this->session->flashdata('message'); ?>
+                        </div>
+                    <?php endif; ?>
                     <div class="card-body">
                         <div class="row">
                             <?php foreach ($halaman as $artikel) {

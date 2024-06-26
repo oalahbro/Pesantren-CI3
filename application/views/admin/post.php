@@ -11,7 +11,8 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <form action="<?php echo base_url('admin/update_article'); ?>" method="post" enctype="multipart/form-data">
+                            <form action="<?php echo base_url('admin/updateArticle'); ?>" method="post" enctype="multipart/form-data">
+                                <input type="text" id="id" name="id" value='<?php echo $halaman[0]['id'] ?>' hidden>
                                 <div class="form-group">
                                     <label for="title">Judul Artikel</label>
                                     <input type="text" class="form-control" id="title" name="title" placeholder="Masukkan judul artikel" required value='<?php echo $halaman[0]['judul'] ?>'>
@@ -59,10 +60,7 @@
                 success: function(response) {
                     response = JSON.parse(response);
                     if (response.success) {
-                        // Assuming the server returns the new image URL
-                        // $('#currentImage').attr('src', response.newImageUrl);
                         currentImage.src = response.newImagePath;
-                        console.log(response)
                     } else {
                         alert('Image upload failed.');
                     }

@@ -1,6 +1,6 @@
 <!-- untuk home -->
 <section id="home">
-    <img src="<?php echo $halaman[1]['gambar']; ?>" />
+    <img src="<?php echo $halaman[1]['gambar']; ?>" style="height:375px; width:500px" />
     <div class="kolom">
         <p class="deskripsi"><?php echo $halaman[1]['kutipan'] ?></p>
         <h2><?php echo $halaman[1]['judul'] ?></h2>

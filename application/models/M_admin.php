@@ -210,4 +210,9 @@ class M_admin extends CI_Model
 
         return $this->db->affected_rows(); // Mengembalikan jumlah baris yang terpengaruh
     }
+    public function updateArticel($articel)
+    {
+        $this->db->where('id', $articel['id']);
+        return $this->db->update('halaman', $articel);
+    }
 }

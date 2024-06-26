@@ -432,4 +432,20 @@ class Admin extends CI_Controller
         $newImageName = 'b7e1fd3e2bf8e2c549f4a84a53637.jpg';
         var_dump($htmlContent);
     }
+    public function updateArticle()
+    {
+
+        $articel = array(
+            'id' => $this->input->post('id'),
+            'judul' => $this->input->post('title'),
+            'isi' => $this->input->post('content')
+        );
+
+        if ($this->M_admin->updateArticel($articel)) {
+            $this->session->set_flashdata('message', 'Artikel <b>' . $articel['judul'] . '</b> berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('message', 'Terjadi kesalahan. Silakan coba lagi.');
+        }
+        redirect(base_url('/Admin/post'));
+    }
 }
