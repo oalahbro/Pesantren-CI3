@@ -348,10 +348,11 @@ class Admin extends CI_Controller
 
         // Header kolom
         $sheet->setCellValue('A1', 'No');
-        $sheet->setCellValue('B1', 'Nama Anggota');
-        $sheet->setCellValue('C1', 'Tanggal Bayar');
-        $sheet->setCellValue('D1', 'Total Bayar');
-        $sheet->setCellValue('E1', 'Status');
+        $sheet->setCellValue('B1', 'ID Anggota');
+        $sheet->setCellValue('C1', 'Nama Anggota');
+        $sheet->setCellValue('D1', 'Tanggal Bayar');
+        $sheet->setCellValue('E1', 'Total Bayar');
+        $sheet->setCellValue('F1', 'Status');
 
         // Ambil data pembayaran dari database
         $payments = $this->M_admin->getPembayaranByFilters($formData);
@@ -363,10 +364,11 @@ class Admin extends CI_Controller
             $formatted_jumlah_bayar = 'Rp ' . number_format($payment->total_bayar, 0, ',', '.');
 
             $sheet->setCellValue('A' . $row, $no);
-            $sheet->setCellValue('B' . $row, $payment->nama_lengkap);
-            $sheet->setCellValue('C' . $row, date('d-M-Y', strtotime($payment->tgl_bayar)));
-            $sheet->setCellValue('D' . $row, $formatted_jumlah_bayar);
-            $sheet->setCellValue('E' . $row, $payment->status == 0 ? 'Pending' : ($payment->status == 1 ? 'Lunas' : 'Ditolak'));
+            $sheet->setCellValue('B' . $row, $payment->id_member);
+            $sheet->setCellValue('C' . $row, $payment->nama_lengkap);
+            $sheet->setCellValue('D' . $row, date('d-M-Y', strtotime($payment->tgl_bayar)));
+            $sheet->setCellValue('E' . $row, $formatted_jumlah_bayar);
+            $sheet->setCellValue('F' . $row, $payment->status == 0 ? 'Pending' : ($payment->status == 1 ? 'Lunas' : 'Ditolak'));
             $row++;
             $no++;
         }
