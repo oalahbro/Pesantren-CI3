@@ -42,6 +42,6 @@
             <li class="menu-header">Fitur</li>
             <li><a class="nav-link" href="<?php echo base_url('admin/post') ?>"><i class="fas fa-money-check-alt"></i> <span>POST</span></a></li>
             <li><a class="nav-link" href="<?php echo base_url('admin/pembayaran') ?>"><i class="fas fa-money-check-alt"></i> <span>PEMBAYARAN</span></a></li>
-            <li><a class="nav-link" href="laporan.php"><i class="fas fa-book"></i> <span>LAPORAN</span></a></li>
+            <li><a class="nav-link" href="<?php echo base_url('admin/report') ?>"><i class="fas fa-book"></i> <span>LAPORAN</span></a></li>
         </aside>
       </div>

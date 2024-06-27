@@ -9,7 +9,6 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-
                 <div class="card px-4 pb-2">
                     <?php if ($this->session->flashdata('message')) : ?>
                         <div class="alert alert-success mt-2">

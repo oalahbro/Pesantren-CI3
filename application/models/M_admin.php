@@ -215,4 +215,28 @@ class M_admin extends CI_Model
         $this->db->where('id', $articel['id']);
         return $this->db->update('halaman', $articel);
     }
+    public function getPembayaranByFilters($formData)
+    {
+        // Extracting date range from form data
+        list($start_date, $end_date) = explode(" - ", $formData['tanggal']);
+
+        $this->db->select('p.*, m.nama_lengkap');
+        $this->db->from('pembayaran p');
+        $this->db->join('members m', 'p.id_member = m.id', 'left');
+        $this->db->where('p.tgl_bayar >=', $start_date);
+        $this->db->where('p.tgl_bayar <=', $end_date);
+
+        // If status is not empty, add the condition
+        if (!empty($formData['status'])) {
+            $this->db->where('p.status', $formData['status']);
+        }
+
+        // If id_anggota is not empty, add the condition
+        if (!empty($formData['id_anggota'])) {
+            $this->db->where('p.id_member', $formData['id_anggota']);
+        }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
 }

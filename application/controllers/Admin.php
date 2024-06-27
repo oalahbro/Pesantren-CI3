@@ -320,30 +320,55 @@ class Admin extends CI_Controller
         }
     }
 
+    public function report()
+    {
+        if (!$this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+            $data['anggota'] = $this->M_admin->get_all();
+
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/report', $data);
+        }
+    }
+
     public function export_to_excel()
     {
+        $formData = array(
+            'tanggal' => $this->input->post('tanggal'),
+            'status' => $this->input->post('status'),
+            'id_anggota' => $this->input->post('id_anggota')
+        );
         // Load PhpSpreadsheet library
         require 'vendor/autoload.php';
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         // Header kolom
-        $sheet->setCellValue('A1', 'ID Member');
-        $sheet->setCellValue('B1', 'Tanggal Bayar');
-        $sheet->setCellValue('C1', 'Total Bayar');
-        $sheet->setCellValue('D1', 'Status');
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'Nama Anggota');
+        $sheet->setCellValue('C1', 'Tanggal Bayar');
+        $sheet->setCellValue('D1', 'Total Bayar');
+        $sheet->setCellValue('E1', 'Status');
 
         // Ambil data pembayaran dari database
-        $payments = $this->M_admin->get_all_payments();
+        $payments = $this->M_admin->getPembayaranByFilters($formData);
 
         // Isi data ke dalam excel
         $row = 2; // Baris awal untuk data
+        $no = 1;
         foreach ($payments as $payment) {
-            $sheet->setCellValue('A' . $row, $payment->id_member);
-            $sheet->setCellValue('B' . $row, date('d-M-Y', strtotime($payment->tgl_bayar)));
-            $sheet->setCellValue('C' . $row, $payment->total_bayar);
-            $sheet->setCellValue('D' . $row, $payment->status == 0 ? 'Pending' : ($payment->status == 1 ? 'Lunas' : 'Ditolak'));
+            $formatted_jumlah_bayar = 'Rp ' . number_format($payment->total_bayar, 0, ',', '.');
+
+            $sheet->setCellValue('A' . $row, $no);
+            $sheet->setCellValue('B' . $row, $payment->nama_lengkap);
+            $sheet->setCellValue('C' . $row, date('d-M-Y', strtotime($payment->tgl_bayar)));
+            $sheet->setCellValue('D' . $row, $formatted_jumlah_bayar);
+            $sheet->setCellValue('E' . $row, $payment->status == 0 ? 'Pending' : ($payment->status == 1 ? 'Lunas' : 'Ditolak'));
             $row++;
+            $no++;
         }
 
         // Set nama file dan header untuk download
@@ -445,9 +470,15 @@ class Admin extends CI_Controller
     }
     public function test1()
     {
-        $htmlContent = $this->M_admin->getUpdateArticel('8')->isi;
-        $newImageName = 'b7e1fd3e2bf8e2c549f4a84a53637.jpg';
-        var_dump($htmlContent);
+        $formData = array(
+            'tanggal' => $this->input->post('tanggal'),
+            'status' => $this->input->post('status'),
+            'id_anggota' => $this->input->post('id_anggota')
+        );
+
+        // Get data from model
+        $data['pembayaran'] = $this->M_admin->getPembayaranByFilters($formData);
+        var_dump($data);
     }
     public function updateArticle()
     {
