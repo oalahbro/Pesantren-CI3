@@ -353,7 +353,6 @@ class Admin extends CI_Controller
         $sheet->setCellValue('D1', 'Tanggal Bayar');
         $sheet->setCellValue('E1', 'Total Bayar');
         $sheet->setCellValue('F1', 'Status');
-        $sheet->setCellValue('G1', 'Total Pembayaran'); // Kolom untuk total pembayaran
 
         // Ambil data pembayaran dari database
         $payments = $this->M_admin->getPembayaranByFilters($formData);
