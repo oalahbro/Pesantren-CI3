@@ -9,11 +9,18 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+
                 <div class="card px-4 pb-2">
+                    <?php if ($this->session->flashdata('message')) : ?>
+                        <div class="alert alert-success mt-2">
+                            <?php echo $this->session->flashdata('message'); ?>
+                        </div>
+                    <?php endif; ?>
                     <div class="card-header">
+
                         <h3>TRANSAKSI PEMBAYARAN</h3>
                         <div class="card-header-form">
-                            <form action="proses_transaksi.php" method="post">
+                            <form action="<?php echo base_url('admin/savePayment') ?>" method="post">
                         </div>
                     </div>
 

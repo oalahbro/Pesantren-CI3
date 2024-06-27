@@ -91,6 +91,23 @@ class Admin extends CI_Controller
             $this->load->view('admin/pembayaran', $data);
         }
     }
+    public function savePayment()
+    {
+        $data = [
+            'id_member' => $this->input->post('id_anggota'),
+            'tgl_bayar' => $this->input->post('tgl_bayar'),
+            'total_bayar' => $this->input->post('jumlah_bayar'),
+            'status' => 1,
+            'notes' => 0,
+            'bukti_bayar' => 0
+        ];
+        if ($this->M_admin->savePayment($data)) {
+            $this->session->set_flashdata('message', 'Pembayaran berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('message', 'Terjadi kesalahan. Silakan coba lagi.');
+        }
+        redirect(base_url('/Admin/pembayaran'));
+    }
 
     public function approval()
     {

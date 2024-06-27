@@ -19,7 +19,6 @@ class M_admin extends CI_Model
         $query = $this->db->get();
         return $query->row()->total_members;
     }
-    // Menghitung member yang sudah melakukan pembayaran bulan ini
 
     public function countMembersPaidThisMonth()
     {
@@ -33,17 +32,14 @@ class M_admin extends CI_Model
         return $query->row()->total_paid;
     }
 
-    // Menghitung member yang belum melakukan pembayaran bulan ini
     public function countMembersUnpaidThisMonth()
     {
-        // Subquery untuk mendapatkan id member yang sudah melakukan pembayaran bulan ini
         $subquery = $this->db->select('id_member')
             ->from('pembayaran')
             ->where('MONTH(tgl_bayar)', date('m'))
             ->where('YEAR(tgl_bayar)', date('Y'))
             ->get_compiled_select();
 
-        // Kueri utama untuk menghitung member yang belum membayar
         $this->db->select('COUNT(id) AS total_unpaid');
         $this->db->from('members');
         $this->db->where("id NOT IN ($subquery)", NULL, FALSE);
@@ -74,6 +70,10 @@ class M_admin extends CI_Model
     {
         $query = $this->db->get('members');
         return $query->result();
+    }
+    public function savePayment($data)
+    {
+        return $this->db->insert('pembayaran', $data);
     }
     public function count_records_pending($search)
     {
