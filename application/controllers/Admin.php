@@ -353,9 +353,17 @@ class Admin extends CI_Controller
         $sheet->setCellValue('D1', 'Tanggal Bayar');
         $sheet->setCellValue('E1', 'Total Bayar');
         $sheet->setCellValue('F1', 'Status');
+        $sheet->setCellValue('G1', 'Total Pembayaran'); // Kolom untuk total pembayaran
 
         // Ambil data pembayaran dari database
         $payments = $this->M_admin->getPembayaranByFilters($formData);
+
+        // Hitung total pembayaran
+        // Hitung total pembayaran
+        $total_pembayaran = 0;
+        foreach ($payments as $payment) {
+            $total_pembayaran += $payment->total_bayar;
+        }
 
         // Isi data ke dalam excel
         $row = 2; // Baris awal untuk data
@@ -372,6 +380,11 @@ class Admin extends CI_Controller
             $row++;
             $no++;
         }
+
+        // Set nilai total pembayaran di kolom E pada baris terakhir
+        $sheet->setCellValue('C' . ($row + 1), ''); // Kolom kosong
+        $sheet->setCellValue('D' . ($row + 1), 'Total');
+        $sheet->setCellValue('E' . ($row + 1), 'Rp ' . number_format($total_pembayaran, 0, ',', '.'));
 
         // Set nama file dan header untuk download
         $filename = 'Laporan_Pembayaran_' . date('Ymd') . '.xlsx';

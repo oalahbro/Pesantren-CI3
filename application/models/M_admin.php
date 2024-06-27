@@ -236,6 +236,7 @@ class M_admin extends CI_Model
             $this->db->where('p.id_member', $formData['id_anggota']);
         }
 
+        $this->db->group_by('p.id'); // Group by id to get total per record
         $query = $this->db->get();
         return $query->result();
     }
