@@ -54,7 +54,7 @@ class Landing extends MY_Controller
             $gambar = str_replace("../assets/gambar/", "assets/gambar/", $gambar);
 
             $judul  = $this->bersihkan_judul($item->judul);
-            $url = "halaman?id=$item->id/$judul";
+            $url = "halaman?id=$item->id";
 
             $isi = $this->maximum_kata(strip_tags($item->isi), 30);
 
@@ -73,7 +73,7 @@ class Landing extends MY_Controller
         foreach ($data['tutors'] as $tutors) {
 
             $nama  = $this->bersihkan_judul($tutors->nama);
-            $url = base_url() . "tutors.php/$tutors->id/$nama";
+            $url = "tutors?id=$tutors->id";
 
             $foto   = $tutors->foto;
 

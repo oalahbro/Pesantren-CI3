@@ -14,4 +14,9 @@ class M_halaman extends CI_Model
         $query = $this->db->get('halaman');
         return $query->row();
     }
+    public function detailTutors($id)
+    {
+        $query = $this->db->get_where('tutors', array('id' => $id));
+        return $query->row();
+    }
 }
