@@ -11,11 +11,11 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <form action="<?php echo base_url('admin/updateArticle'); ?>" method="post" enctype="multipart/form-data">
+                            <form action="<?php echo base_url('admin/updateTutor'); ?>" method="post" enctype="multipart/form-data">
                                 <input type="text" id="id" name="id" value='<?php echo $tutor[0]['id'] ?>' hidden>
                                 <div class="form-group">
                                     <label for="title">Nama Guru</label>
-                                    <input type="text" class="form-control" id="title" name="title" placeholder="Masukkan judul artikel" required value='<?php echo $tutor[0]['nama'] ?>'>
+                                    <input type="text" class="form-control" id="title" name="nama" placeholder="Masukkan judul artikel" required value='<?php echo $tutor[0]['nama'] ?>'>
                                 </div>
                                 <div class="form-group">
                                     <label for="content">Profile Guru</label>
@@ -26,7 +26,7 @@
                                     <input type="file" id="imageUpload" class="form-control">
                                 </div>
                                 <div class="form-group" style="margin-top: 20px;">
-                                    <img id="currentImage" src="<?php echo $tutor[0]['gambar'] ?>" alt="Current Image" class="img-responsive">
+                                    <img id="currentImage" style="max-width: 200px;" src="<?php echo base_url('assets/gambar/' . $tutor[0]['gambar'])  ?>" alt="Current Image" class="img-responsive">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
@@ -60,7 +60,7 @@
                 success: function(response) {
                     response = JSON.parse(response);
                     if (response.success) {
-                        currentImage.src = response.newImagePath;
+                        currentImage.src = response.newImagePath + '?t=' + new Date().getTime();
                     } else {
                         alert('Image upload failed.');
                     }

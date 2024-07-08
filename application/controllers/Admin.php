@@ -504,6 +504,22 @@ class Admin extends CI_Controller
             $this->load->view('admin/tutor', $parse);
         }
     }
+    public function updateTutor()
+    {
+
+        $tutor = array(
+            'id' => $this->input->post('id'),
+            'nama' => $this->input->post('nama'),
+            'isi' => $this->input->post('content')
+        );
+
+        if ($this->M_admin->updateTutor($tutor)) {
+            $this->session->set_flashdata('message', 'Tutors <b>' . $tutor['judul'] . '</b> berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('message', 'Terjadi kesalahan. Silakan coba lagi.');
+        }
+        redirect(base_url('/Admin/post'));
+    }
     public function imageUp()
     {
         $id = $this->input->get('id');
@@ -529,7 +545,7 @@ class Admin extends CI_Controller
         } else {
             // Berhasil upload
             $image_path = base_url('assets/gambar/' . $rep); // Path gambar yang baru diunggah
-            echo json_encode(array('success' => true, 'newImagePath' => $image_path));
+            echo json_encode(array('success' => true, 'newImagePath' => $image_path, 'id' =>  $image_path));
         }
     }
     public function test1()

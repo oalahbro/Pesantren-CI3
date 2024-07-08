@@ -251,6 +251,11 @@ class M_admin extends CI_Model
         $query = $this->db->get_where('tutors', array('id' => $id));
         return $query->row();
     }
+    public function updateTutor($tutor)
+    {
+        $this->db->where('id', $tutor['id']);
+        return $this->db->update('tutors', $tutor);
+    }
     public function getPartners()
     {
         $this->db->order_by('id', 'ASC');
