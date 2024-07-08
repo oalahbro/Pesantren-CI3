@@ -240,4 +240,21 @@ class M_admin extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function getTutors()
+    {
+        $this->db->order_by('id', 'ASC');
+        $query = $this->db->get('tutors');
+        return $query->result();
+    }
+    public function getUpdateTutors($id)
+    {
+        $query = $this->db->get_where('tutors', array('id' => $id));
+        return $query->row();
+    }
+    public function getPartners()
+    {
+        $this->db->order_by('id', 'ASC');
+        $query = $this->db->get('partners');
+        return $query->result();
+    }
 }

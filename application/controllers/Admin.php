@@ -418,6 +418,34 @@ class Admin extends CI_Controller
                     'isi' => $item->isi
                 ];
             }
+
+            $data['guru'] = $this->M_admin->getTutors();
+            $parse['tutors'] = [];
+
+
+            foreach ($data['guru'] as $item) {
+                $cleaned_isi = str_replace(['<p>', '</p>'], ' ', $item->isi);
+                $parse['tutors'][] = [
+                    'id' => $item->id,
+                    'foto' => $item->foto,
+                    'isi' => substr($cleaned_isi, 0, 60) . "...",
+                    'nama' => $item->nama
+                ];
+            }
+
+            $data['partner'] = $this->M_admin->getPartners();
+            $parse['partners'] = [];
+
+
+            foreach ($data['partner'] as $item) {
+                $cleaned_isi = str_replace(['<p>', '</p>'], ' ', $item->isi);
+                $parse['partners'][] = [
+                    'id' => $item->id,
+                    'foto' => $item->foto,
+                    'isi' => substr($cleaned_isi, 0, 60) . "...",
+                    'nama' => $item->nama
+                ];
+            }
             // print_r($parse);
             $this->load->view('components/admin/header');
             $this->load->view('components/admin/sidebar');
@@ -431,27 +459,49 @@ class Admin extends CI_Controller
             redirect(base_url('Admin'));
         } else {
             $id = $this->input->get('id');
-            $data['articel'] = $this->M_admin->getUpdateArticel($id);
+            $data = $this->M_admin->getUpdateArticel($id);
             $parse['halaman'] = [];
             $gambar = '';
-            if (preg_match('/<img.*?src=["\'](.*?)["\']/', $data['articel']->isi, $matches)) {
+            if (preg_match('/<img.*?src=["\'](.*?)["\']/', $data->isi, $matches)) {
                 $gambar = $matches[1]; // Extract the image source URL
             }
             $gambar = str_replace("../gambar/", "../assets/gambar/", $gambar);
 
             $parse['halaman'][] = [
-                'id' => $data['articel']->id,
+                'id' => $data->id,
                 'gambar' => $gambar,
-                'kutipan' => $data['articel']->kutipan,
-                'judul' => $data['articel']->judul,
-                'kutipan' => $data['articel']->kutipan,
-                'isi' => $data['articel']->isi
+                'kutipan' => $data->kutipan,
+                'judul' => $data->judul,
+                'isi' => $data->isi
             ];
             // print_r($parse['halaman']);
             $this->load->view('components/admin/header');
             $this->load->view('components/admin/sidebar');
             $this->load->view('components/admin/footer');
             $this->load->view('admin/post', $parse);
+        }
+    }
+
+    public function update_tutor()
+    {
+        if (!$this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+            $id = $this->input->get('id');
+            $data = $this->M_admin->getUpdateTutors($id);
+            $parse['tutor'] = [];
+
+            $parse['tutor'][] = [
+                'id' => $data->id,
+                'nama' => $data->nama,
+                'gambar' => $data->foto,
+                'isi' => $data->isi
+            ];
+            // print_r($parse['halaman']);
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/tutor', $parse);
         }
     }
     public function imageUp()
