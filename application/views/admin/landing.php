@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <!-- Toggle Button -->
-            <div class="col-md-12 btn-group btn-group-toggle">
+            <div class="col-md-12 btn-group btn-group-toggle mb-2">
                 <label class="btn btn-success active" id="btn-show-post">
                     <input type="radio" onclick="toggleSection('post')" name="options" id="option1" autocomplete="off"> Show Post
                 </label>

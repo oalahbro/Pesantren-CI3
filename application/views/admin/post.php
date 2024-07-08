@@ -38,7 +38,10 @@
     </section>
 </div>
 <script>
-    CKEDITOR.replace('content');
+    CKEDITOR.replace('content', {
+        versionCheck: false
+    });
+
     $(document).ready(function() {
         $('#imageUpload').on('change', function() {
             var fileInput = $('#imageUpload')[0];

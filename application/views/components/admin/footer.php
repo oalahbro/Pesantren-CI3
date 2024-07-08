@@ -1,6 +1,6 @@
 <!-- General JS Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 <script src="<?php echo base_url("assets/admin/assets/bootstrap/popper.min.js") ?>"></script>
 
 <script src="<?php echo base_url("assets/admin/assets/bootstrap/bootstrap.min.js") ?>"> </script>
