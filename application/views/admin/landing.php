@@ -32,7 +32,7 @@
                         <h4>ARTIKEL</h4>
                     </div>
                     <?php if ($this->session->flashdata('message')) : ?>
-                        <div class="alert alert-success">
+                        <div class="alert alert-success mx-4">
                             <?php echo $this->session->flashdata('message'); ?>
                         </div>
                     <?php endif; ?>

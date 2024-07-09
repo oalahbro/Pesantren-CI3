@@ -514,7 +514,7 @@ class Admin extends CI_Controller
         );
 
         if ($this->M_admin->updateTutor($tutor)) {
-            $this->session->set_flashdata('message', 'Tutors <b>' . $tutor['judul'] . '</b> berhasil disimpan.');
+            $this->session->set_flashdata('message', 'Tutors <b>' . $tutor['nama'] . '</b> berhasil disimpan.');
         } else {
             $this->session->set_flashdata('message', 'Terjadi kesalahan. Silakan coba lagi.');
         }
