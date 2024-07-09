@@ -411,7 +411,7 @@ class Admin extends CI_Controller
 
                 $parse['halaman'][] = [
                     'id' => $item->id,
-                    'gambar' => $gambar,
+                    'gambar' => $gambar . "?T=" . time(),
                     'kutipan' => $item->kutipan,
                     'judul' => $item->judul,
                     'kutipan' => $item->kutipan,
@@ -427,7 +427,7 @@ class Admin extends CI_Controller
                 $cleaned_isi = str_replace(['<p>', '</p>'], ' ', $item->isi);
                 $parse['tutors'][] = [
                     'id' => $item->id,
-                    'foto' => $item->foto,
+                    'foto' => $item->foto . "?T=" . time(),
                     'isi' => substr($cleaned_isi, 0, 60) . "...",
                     'nama' => $item->nama
                 ];
@@ -441,8 +441,8 @@ class Admin extends CI_Controller
                 $cleaned_isi = str_replace(['<p>', '</p>'], ' ', $item->isi);
                 $parse['partners'][] = [
                     'id' => $item->id,
-                    'foto' => $item->foto,
-                    'isi' => substr($cleaned_isi, 0, 60) . "...",
+                    'foto' => $item->foto . "?T=" . time(),
+                    'isi' => $cleaned_isi,
                     'nama' => $item->nama
                 ];
             }
@@ -571,6 +571,44 @@ class Admin extends CI_Controller
 
         if ($this->M_admin->updateArticel($articel)) {
             $this->session->set_flashdata('message', 'Artikel <b>' . $articel['judul'] . '</b> berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('message', 'Terjadi kesalahan. Silakan coba lagi.');
+        }
+        redirect(base_url('/Admin/post'));
+    }
+    public function update_partner()
+    {
+        if (!$this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+            $id = $this->input->get('id');
+            $data = $this->M_admin->getUpdatePartners($id);
+            $parse['partner'] = [];
+
+            $parse['partner'][] = [
+                'id' => $data->id,
+                'nama' => $data->nama,
+                'gambar' => $data->foto,
+                'isi' => $data->isi
+            ];
+            // print_r($parse['halaman']);
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/partner', $parse);
+        }
+    }
+    public function updatePartner()
+    {
+
+        $tutor = array(
+            'id' => $this->input->post('id'),
+            'nama' => $this->input->post('nama'),
+            'isi' => $this->input->post('nama')
+        );
+
+        if ($this->M_admin->updatePartner($tutor)) {
+            $this->session->set_flashdata('message', 'Tutors <b>' . $tutor['nama'] . '</b> berhasil disimpan.');
         } else {
             $this->session->set_flashdata('message', 'Terjadi kesalahan. Silakan coba lagi.');
         }

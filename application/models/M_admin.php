@@ -262,4 +262,14 @@ class M_admin extends CI_Model
         $query = $this->db->get('partners');
         return $query->result();
     }
+    public function getUpdatePartners($id)
+    {
+        $query = $this->db->get_where('partners', array('id' => $id));
+        return $query->row();
+    }
+    public function updatePartner($partner)
+    {
+        $this->db->where('id', $partner['id']);
+        return $this->db->update('partners', $partner);
+    }
 }
