@@ -112,7 +112,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h4>GURU</h4>
-                        <button type="button" class="btn btn-primary" onclick="window.location.href='<?php echo base_url('Admin/add_guru'); ?>'">Add Guru</button>
+                        <button type="button" class="btn btn-primary" onclick="window.location.href='<?php echo base_url('Admin/add_tutor'); ?>'">Add Guru</button>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -144,7 +144,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h4>PARTNERS</h4>
-                        <button type="button" class="btn btn-primary" onclick="window.location.href='<?php echo base_url('Admin/add_guru'); ?>'">Add Partners</button>
+                        <button type="button" class="btn btn-primary" onclick="window.location.href='<?php echo base_url('Admin/add_partner'); ?>'">Add Partners</button>
                     </div>
                     <div class="card-body">
                         <div class="row">

@@ -656,4 +656,48 @@ class Admin extends CI_Controller
             echo json_encode(['status' => 'error']);
         }
     }
+    public function add_tutor()
+    {
+        if (!$this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/add_tutor');
+        }
+    }
+
+    public function addTutor()
+    {
+        $this->load->library('upload');
+
+        $nama = $this->input->post('nama');
+        $content = $this->input->post('content');
+
+        // Configuration for file upload
+        $config['upload_path'] = './assets/gambar/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size'] = 2048;
+        $this->upload->initialize($config);
+
+        if ($this->upload->do_upload('foto')) {
+            $uploadData = $this->upload->data();
+            $foto = $uploadData['file_name'];
+
+            $data = array(
+                'nama' => $nama,
+                'isi' => $content,
+                'foto' => $foto
+            );
+
+            $this->M_admin->insertTutor($data);
+            $this->session->set_flashdata('message', 'Guru berhasil ditambahkan.');
+            redirect(base_url('/Admin/post'));
+        } else {
+            $this->session->set_flashdata('error', $this->upload->display_errors());
+            redirect(base_url('/Admin/post'));
+        }
+    }
 }

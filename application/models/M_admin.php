@@ -288,4 +288,8 @@ class M_admin extends CI_Model
     {
         return $this->db->delete($table, ['id' => $id]); // Sesuaikan dengan nama tabel Anda
     }
+    public function insertTutor($data)
+    {
+        return $this->db->insert('tutors', $data);
+    }
 }
