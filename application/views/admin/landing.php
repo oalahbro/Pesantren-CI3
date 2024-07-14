@@ -1,25 +1,31 @@
 <style>
     .article-image {
         border-radius: 2%;
-        /* Makes the image circular */
         overflow: hidden;
-        /* Ensures the image doesn't overflow the rounded corners */
+        width: 100%;
+        height: 200px;
+        /* Pastikan semua gambar memiliki tinggi yang sama */
+        background-size: cover;
+        background-position: center;
     }
 
     .article {
         transition: transform 0.3s;
+        margin-bottom: 20px;
     }
 
     .article:hover {
         transform: scale(1.012);
     }
 
-    .article-title h2 a {
+    .article-title h2 a,
+    .article-title h5 a {
         color: #ffffff;
         text-decoration: none;
     }
 
-    .article-title h2 a:hover {
+    .article-title h2 a:hover,
+    .article-title h5 a:hover {
         color: #f8f9fa;
     }
 
@@ -31,14 +37,14 @@
         color: #ffffff;
     }
 
-    .article-title h2 {
+    .article-title h2,
+    .article-title h5 {
         margin-bottom: 10px;
     }
 
     .article p {
         color: #ffffff !important;
         margin: 0;
-
     }
 
     .article-header {
@@ -51,7 +57,12 @@
         right: 10px;
         z-index: 1;
     }
+
+    .card-header .btn {
+        margin-left: auto;
+    }
 </style>
+
 
 <div class="main-content bg-primary">
     <!-- Section for Landing Page Post -->
@@ -129,7 +140,38 @@
                                                 <div class="article-title">
                                                     <h5><?php echo $tutor['nama'] ?></h5>
                                                 </div>
-                                                <p><?php echo str_replace('<p>', ' ', str_replace('</p>', ' ', $tutor['isi'])) ?> </p>
+                                                <p><?php echo strip_tags($tutor['isi']); ?></p>
+                                            </div>
+                                        </a>
+                                    </article>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" style="display: none;" id="partners-section">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4>PARNTER</h4>
+                        <button type="button" class="btn btn-primary" onclick="window.location.href='<?php echo base_url('Admin/add_partner'); ?>'">Add Partner</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <?php foreach ($partners as $partner) { ?>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <article class="article article-style-c">
+                                        <div class="article-header position-relative">
+                                            <div class="article-image rounded-image" data-background="<?php echo base_url('assets/gambar/' . $partner['foto']) ?>" style="background-image: url(&quot;<?php echo base_url('assets/gambar/' . $partner['foto']) ?>&quot;);">
+                                            </div>
+                                            <button class="btn btn-danger btn-sm delete-button" onclick="deletePost('<?php echo $partner['id']; ?>','partners')">Delete</button>
+                                        </div>
+                                        <a href="<?php echo base_url("Admin/update_tutor?id=" . $partner['id']) ?>">
+                                            <div class="article-details">
+                                                <div class="article-title">
+                                                    <h5><?php echo $partner['nama'] ?></h5>
+                                                </div>
+                                                <p><?php echo strip_tags($partner['isi']); ?></p>
                                             </div>
                                         </a>
                                     </article>
@@ -140,37 +182,6 @@
                 </div>
             </div>
 
-            <div class="col-md-12" style="display: none;" id="partners-section">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4>PARTNERS</h4>
-                        <button type="button" class="btn btn-primary" onclick="window.location.href='<?php echo base_url('Admin/add_partner'); ?>'">Add Partners</button>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <?php foreach ($partners as $partner) { ?>
-                                <div class="col-12 col-md-4 col-lg-4">
-                                    <article class="article article-style-c">
-                                        <div class="article-header">
-                                            <div class="article-image rounded-image" data-background="<?php echo base_url('assets/gambar/' . $partner['foto']) ?>" style="background-image: url(&quot;<?php echo base_url('assets/gambar/' . $partner['foto']) ?>&quot;);">
-                                            </div>
-                                            <button class="btn btn-danger btn-sm delete-button" onclick="deletePost('<?php echo $partner['id']; ?>','partners')">Delete</button>
-                                        </div>
-                                        <a href="<?php echo base_url("Admin/update_partner?id=" . $partner['id']) ?>">
-                                            <div class="article-details">
-                                                <div class="article-title">
-                                                    <h5><?php echo $partner['nama'] ?></h5>
-                                                </div>
-                                                <p><?php echo str_replace('<p>', ' ', str_replace('</p>', ' ', $partner['isi'])) ?> </p>
-                                            </div>
-                                        </a>
-                                    </article>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-md-12" style="display: none;" id="info-section">
                 <div class="card">
                     <div class="card-header">
