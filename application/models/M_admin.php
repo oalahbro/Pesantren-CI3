@@ -154,6 +154,10 @@ class M_admin extends CI_Model
         return $this->db->update('members', $profileData); // Ganti 'users' dengan nama tabel profil Anda
 
     }
+    public function deleteAnggota($id)
+    {
+        return $this->db->delete('members', ['id' => $id]); // Sesuaikan dengan nama tabel Anda
+    }
     public function get_payment_history($search = '', $perPage = 10, $offset = 0)
     {
         $this->db->select('pembayaran.*, members.nama_lengkap');

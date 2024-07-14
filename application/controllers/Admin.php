@@ -228,6 +228,7 @@ class Admin extends CI_Controller
             $output .= '<td>' . $row['alamat'] . '</td>';
             $output .= '<td>';
             $output .= '<button class="btn btn-info details-button" data-id="' .  $row['id'] . '">Detail</button>';
+            $output .= '<button class="btn btn-danger delete-button delete" data-id="' .  $row['id'] . '">Delete</button>';
             $output .= '</td>';
             $output .= '</tr>';
             $no++; // Increment numbering for the next row
@@ -265,6 +266,15 @@ class Admin extends CI_Controller
             redirect(base_url('/Admin/anggota'));
         } else {
             redirect(base_url('Admin'));
+        }
+    }
+    public function delete_anggota()
+    {
+        $id = $this->input->post('id_anggota');
+        if ($this->M_admin->deleteAnggota($id)) {
+            echo json_encode(array('success' => true, 'message' => 'Anggota berhasil dihapus.'));
+        } else {
+            echo json_encode(array('success' => false, 'message' => 'Gagal menghapus Anggota.'));
         }
     }
     public function fetch_history_pembayaran()

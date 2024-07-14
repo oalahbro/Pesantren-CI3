@@ -165,6 +165,25 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus anggota ini?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary" id="deleteAction">Ya</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     $(document).ready(function() {
@@ -317,6 +336,37 @@
             $('#editForm input').prop('disabled', true);
             $('#toggleEdit').removeClass('btn-secondary').addClass('btn-primary');
             initialData = {};
+        });
+
+        $(document).on('click', '.delete', function() {
+            var id_anggota = $(this).data('id');
+            $('#deleteAction').data('id', id_anggota);
+            $('#deleteAction').data('action', 'delete');
+            $('#deleteModal').modal('show');
+        });
+
+        $('#deleteAction').click(function() {
+            var id_anggota = $(this).data('id');
+            // Lakukan AJAX request untuk proses accept/reject
+            $.ajax({
+                url: '<?php echo base_url('admin/delete_anggota') ?>',
+                method: 'POST',
+                data: {
+                    id_anggota: id_anggota
+                },
+                success: function(response) {
+                    response = JSON.parse(response);
+                    // Tampilkan pesan sukses atau error
+                    alert(response.message);
+                    // Refresh tabel pembayaran jika berhasil
+                    if (response.success) {
+                        location.reload();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
         });
     });
 </script>
