@@ -292,4 +292,8 @@ class M_admin extends CI_Model
     {
         return $this->db->insert('tutors', $data);
     }
+    public function insertPartner($data)
+    {
+        return $this->db->insert('partners', $data);
+    }
 }

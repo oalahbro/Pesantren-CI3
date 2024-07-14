@@ -16,18 +16,15 @@ class Tutors extends MY_Controller
             $ago = new DateTime($datetime);
             $diff = $now->diff($ago);
 
-            $diff->w = floor($diff->d / 7);
-            $diff->d -= $diff->w * 7;
-
             $string = array(
                 'y' => 'tahun',
                 'm' => 'bulan',
-                'w' => 'minggu',
                 'd' => 'hari',
                 'h' => 'jam',
                 'i' => 'menit',
                 's' => 'detik',
             );
+
             foreach ($string as $k => &$v) {
                 if ($diff->$k) {
                     $v = $diff->$k . ' ' . $v;
@@ -39,6 +36,7 @@ class Tutors extends MY_Controller
             if (!$full) $string = array_slice($string, 0, 1);
             return $string ? 'last update ' . implode(', ', $string) . ' lalu' : 'baru saja';
         }
+
 
         if (isset($_GET['id'])) {
             $id = $_GET['id'];

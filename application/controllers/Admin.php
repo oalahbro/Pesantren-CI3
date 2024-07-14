@@ -700,4 +700,49 @@ class Admin extends CI_Controller
             redirect(base_url('/Admin/post'));
         }
     }
+
+    public function add_partner()
+    {
+        if (!$this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/add_partner');
+        }
+    }
+
+    public function addPartner()
+    {
+        $this->load->library('upload');
+
+        $nama = $this->input->post('nama');
+        $content = $this->input->post('content');
+
+        // Configuration for file upload
+        $config['upload_path'] = './assets/gambar/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size'] = 2048;
+        $this->upload->initialize($config);
+
+        if ($this->upload->do_upload('foto')) {
+            $uploadData = $this->upload->data();
+            $foto = $uploadData['file_name'];
+
+            $data = array(
+                'nama' => $nama,
+                'isi' => $nama,
+                'foto' => $foto
+            );
+
+            $this->M_admin->insertPartner($data);
+            $this->session->set_flashdata('message', 'Partner berhasil ditambahkan.');
+            redirect(base_url('/Admin/post'));
+        } else {
+            $this->session->set_flashdata('error', $this->upload->display_errors());
+            redirect(base_url('/Admin/post'));
+        }
+    }
 }
