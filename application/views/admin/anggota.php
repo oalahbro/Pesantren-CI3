@@ -6,18 +6,19 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <h4>DAFTAR ANGGOTA</h4>
-                        <div class="card-header-form">
+                        <div class="card-header-form d-flex align-items-center">
                             <form class="form-inline">
-                                <div class="input-group-btn">
+                                <div class="input-group">
                                     <input type="text" id="searchInput" class="form-control" placeholder="Search">
                                 </div>
                             </form>
+                            <button type="button" class="btn btn-primary ml-2 add">Add Anggota</button>
                         </div>
                     </div>
                     <?php if ($this->session->flashdata('message')) : ?>
-                        <div class="alert alert-success">
+                        <div class="alert alert-success mx-2">
                             <?php echo $this->session->flashdata('message'); ?>
                         </div>
                     <?php endif; ?>
@@ -156,6 +157,100 @@
                             <input class="form-control" id="inputFamilyTelp" type="text" placeholder="Masukkan no telp keluarga" name="telp_keluarga" value="" disabled>
                         </div>
                         <button id="submitButton" class="btn btn-primary" type="submit" style="display: none;">Save changes</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal bd-example-modal-lg fade " id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm" action="<?php echo base_url('Admin/addAnggota'); ?>" method="post">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="modal-title" id="addModalLabel">Tambah Anggota</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Form Group (email)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputUsername">Email</label>
+                            <input class="form-control disabled-permanent" id="Username" type="email" placeholder="Masukkan email" name="email" value="">
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (nama)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFirstName">Nama lengkap</label>
+                                <input class="form-control disabled-permanent" id="FirstName" type="text" placeholder="Masukkan nama lengkap" name="nama_lengkap" value="">
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLastName">Nama Panggilan</label>
+                                <input class="form-control" id="LastName" type="text" placeholder="Masukkan nama panggilan" name="nama_panggilan" value="">
+                            </div>
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputOrgName">No Telp</label>
+                                <input class="form-control" id="OrgName" type="text" placeholder="Masukkan nomor telp" name="telp" value="">
+                            </div>
+                            <!-- Form Group (location)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLocation">Pekerjaan</label>
+                                <input class="form-control" id="Work" type="text" placeholder="Masukkan Pekerjaan" name="pekerjaan" value="">
+                            </div>
+                        </div>
+                        <!-- Form Group (email address)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Alamat sekarang</label>
+                            <input class="form-control" id="Address" type="text" placeholder="Masukkan alamat" name="alamat" value="">
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhone">Pendidikan Terakhir</label>
+                                <input class="form-control" id="Edu" type="tel" placeholder="Masukkan pendidikan terakhir" name="pendidikan_terakhir" value="">
+                            </div>
+                            <!-- Form Group (birthday)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBirthday">Jumlah Anggota Keluarga</label>
+                                <input class="form-control" id="Family" type="text" placeholder="Masukkan julah anggota keluarga" name="jumlah_anggota_keluarga" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-header">Data Keluarga</div>
+                    <div class="card-body">
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFamilyName">Nama keluarga</label>
+                                <input class="form-control" id="FamilyName" type="text" placeholder="Masukkan nama Keluarga" name="nama_keluarga" value="">
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFamilyStatus">Status Keluarga</label>
+                                <input class="form-control" id="FamilyStatus" type="text" placeholder="Masukkan status keluarga" name="status_keluarga" value="">
+                            </div>
+                        </div>
+                        <!-- Form Group (email address)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputFamilyTelp">No telp Keluarga</label>
+                            <input class="form-control" id="FamilyTelp" type="text" placeholder="Masukkan no telp keluarga" name="telp_keluarga" value="">
+                        </div>
+                        <button id="submit" class="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
@@ -343,6 +438,9 @@
             $('#deleteAction').data('id', id_anggota);
             $('#deleteAction').data('action', 'delete');
             $('#deleteModal').modal('show');
+        });
+        $(document).on('click', '.add', function() {
+            $('#addModal').modal('show');
         });
 
         $('#deleteAction').click(function() {

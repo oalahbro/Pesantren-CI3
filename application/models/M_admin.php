@@ -158,6 +158,10 @@ class M_admin extends CI_Model
     {
         return $this->db->delete('members', ['id' => $id]); // Sesuaikan dengan nama tabel Anda
     }
+    public function insert_anggota($data)
+    {
+        return $this->db->insert('members', $data);
+    }
     public function get_payment_history($search = '', $perPage = 10, $offset = 0)
     {
         $this->db->select('pembayaran.*, members.nama_lengkap');

@@ -277,6 +277,32 @@ class Admin extends CI_Controller
             echo json_encode(array('success' => false, 'message' => 'Gagal menghapus Anggota.'));
         }
     }
+    public function addAnggota()
+    {
+        $data = array(
+            'email' => $this->input->post('email'),
+            'nama_lengkap' => $this->input->post('nama_lengkap'),
+            'nama_panggilan' => $this->input->post('nama_panggilan'),
+            'telp' => $this->input->post('telp'),
+            'pekerjaan' => $this->input->post('pekerjaan'),
+            'alamat' => $this->input->post('alamat'),
+            'pendidikan_terakhir' => $this->input->post('pendidikan_terakhir'),
+            'jumlah_anggota_keluarga' => $this->input->post('jumlah_anggota_keluarga'),
+            'nama_keluarga' => $this->input->post('nama_keluarga'),
+            'status_keluarga' => $this->input->post('status_keluarga'),
+            'telp_keluarga' => $this->input->post('telp_keluarga')
+        );
+
+        $insert = $this->M_admin->insert_anggota($data);
+
+        if ($insert) {
+            $this->session->set_flashdata('message', 'Anggota berhasil ditambahkan.');
+        } else {
+            $this->session->set_flashdata('message', 'Terjadi kesalahan saat menambahkan anggota.');
+        }
+        redirect('Admin/anggota');
+    }
+
     public function fetch_history_pembayaran()
     {
         $perPage = 10;
