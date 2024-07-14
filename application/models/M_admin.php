@@ -191,7 +191,13 @@ class M_admin extends CI_Model
     }
     public function articel()
     {
-        $query = $this->db->get('halaman');
+        // $query = $this->db->get('halaman');
+        $query =  $this->db->select('*')
+            ->from('halaman')
+            ->order_by('id', 'ASC')
+            ->limit(10, 1) // 
+            ->get();
+
         return $query->result();
     }
     public function getUpdateArticel($id)
@@ -271,5 +277,15 @@ class M_admin extends CI_Model
     {
         $this->db->where('id', $partner['id']);
         return $this->db->update('partners', $partner);
+    }
+    public function getInformation()
+    {
+        $this->db->order_by('id', 'ASC');
+        $query = $this->db->get('info');
+        return $query->result();
+    }
+    public function deletePost($id, $table)
+    {
+        return $this->db->delete($table, ['id' => $id]); // Sesuaikan dengan nama tabel Anda
     }
 }

@@ -446,6 +446,19 @@ class Admin extends CI_Controller
                     'nama' => $item->nama
                 ];
             }
+
+            $data['information'] = $this->M_admin->getInformation();
+            $parse['information'] = [];
+
+
+            foreach ($data['information'] as $item) {
+                $cleaned_isi = str_replace(['<p>', '</p>'], ' ', $item->isi);
+                $parse['information'][] = [
+                    'id' => $item->id,
+                    'isi' => $cleaned_isi,
+                    'judul' => $item->judul
+                ];
+            }
             // print_r($parse);
             $this->load->view('components/admin/header');
             $this->load->view('components/admin/sidebar');
@@ -613,5 +626,34 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('message', 'Terjadi kesalahan. Silakan coba lagi.');
         }
         redirect(base_url('/Admin/post'));
+    }
+    public function delete_post()
+    {
+        $id = $this->input->post('id');
+        $table = $this->input->post('table');
+
+        // Dapatkan data sebelum dihapus untuk mendapatkan nama file foto
+        if ($table == 'tutors') {
+            $data = $this->M_admin->getUpdateTutors($id); // Anda mungkin perlu menyesuaikan ini
+        } else {
+            $data = $this->M_admin->getUpdatePartners($id); // Anda mungkin perlu menyesuaikan ini
+        }
+
+        // Hapus data dari database
+        $result = $this->M_admin->deletePost($id, $table);
+
+        if ($result) {
+            // Jika data berhasil dihapus, hapus file foto dari folder
+            $foto = $data->foto;
+            $foto_path = FCPATH . 'assets/gambar/' . $foto;
+
+            if (file_exists($foto_path)) {
+                unlink($foto_path);
+            }
+
+            echo json_encode(['status' => 'success']);
+        } else {
+            echo json_encode(['status' => 'error']);
+        }
     }
 }
