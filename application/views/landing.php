@@ -60,6 +60,11 @@
 </section>
 
 <section class="regular slider">
+    <div class="kolom">
+        <p class="halaman">Our Top News</p>
+        <h2>News</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, optio!</p>
+    </div>
     <?php foreach ($halaman as $post) { ?>
         <div class="card">
             <a href="<?= $post['url'] ?>" style="color: black; text-decoration: none;">
