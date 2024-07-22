@@ -69,6 +69,7 @@
     <section class="section">
         <div class="section-header">
             <h1>LANDING PAGE POST</h1>
+
         </div>
         <div class="row">
             <!-- Toggle Button -->
@@ -89,6 +90,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>ARTIKEL</h4>
+                        <button type="button" class="btn btn-primary" onclick="window.location.href='<?php echo base_url('Admin/add_article'); ?>'">Add Post</button>
                     </div>
                     <?php if ($this->session->flashdata('message')) : ?>
                         <div class="alert alert-success mx-4">
@@ -103,6 +105,7 @@
                                         <div class="article-header">
                                             <div class="article-image rounded-image" data-background="<?php echo $artikel['gambar'] ?>" style="background-image: url(&quot;<?php echo $artikel['gambar'] ?>&quot;);">
                                             </div>
+                                            <button class="btn btn-danger btn-sm delete-button" onclick="deletePost('<?php echo $artikel['id']; ?>','halaman')">Delete</button>
                                         </div>
                                         <a href="<?php echo base_url("Admin/update_articel?id=" . $artikel['id']) ?>">
                                             <div class="article-details">
@@ -166,7 +169,7 @@
                                             </div>
                                             <button class="btn btn-danger btn-sm delete-button" onclick="deletePost('<?php echo $partner['id']; ?>','partners')">Delete</button>
                                         </div>
-                                        <a href="<?php echo base_url("Admin/update_tutor?id=" . $partner['id']) ?>">
+                                        <a href="<?php echo base_url("Admin/update_partner?id=" . $partner['id']) ?>">
                                             <div class="article-details">
                                                 <div class="article-title">
                                                     <h5><?php echo $partner['nama'] ?></h5>
@@ -254,7 +257,7 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        alert("Tutor deleted successfully.");
+                        alert(table + " deleted successfully.");
                         // Anda bisa melakukan refresh atau menghapus elemen yang bersangkutan dari DOM
                         location.reload();
 
