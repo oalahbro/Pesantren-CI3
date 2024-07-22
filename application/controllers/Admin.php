@@ -577,38 +577,78 @@ class Admin extends CI_Controller
         $config['max_size'] = 2048; // Ukuran maksimal gambar (2MB)
         $config['overwrite'] = TRUE; // Memastikan gambar yang ada akan diganti
 
-        // Hapus ../assets/gambar/ dari nama file jika ada
-        $rep = str_replace("../assets/gambar/", "", $id);
+        if ($id) {
+            // Hapus ../assets/gambar/ dari nama file jika ada
+            $rep = str_replace("../assets/gambar/", "", $id);
 
-        // Konfigurasi nama file yang akan diunggah
-        $config['file_name'] = $rep;
+            // Konfigurasi nama file yang akan diunggah
+            $config['file_name'] = $rep;
 
-        // Load library upload dan konfigurasinya
-        $this->load->library('upload', $config);
+            // Load library upload dan konfigurasinya
+            $this->load->library('upload', $config);
 
-        // Lakukan upload gambar
-        if (!$this->upload->do_upload('file')) {
-            // Gagal upload
-            $error = array('error' => $this->upload->display_errors());
-            echo json_encode(array('success' => false, 'message' => $error['error']));
+            // Lakukan upload gambar
+            if (!$this->upload->do_upload('file')) {
+                // Gagal upload
+                $error = array('error' => $this->upload->display_errors());
+                echo json_encode(array('success' => false, 'message' => $error['error']));
+            } else {
+                // Berhasil upload
+                $image_path = base_url('assets/gambar/' . $rep); // Path gambar yang baru diunggah
+                echo json_encode(array('success' => true, 'newImagePath' => $image_path, 'id' =>  $image_path));
+            }
         } else {
-            // Berhasil upload
-            $image_path = base_url('assets/gambar/' . $rep); // Path gambar yang baru diunggah
-            echo json_encode(array('success' => true, 'newImagePath' => $image_path, 'id' =>  $image_path));
+            // Load library upload dan konfigurasinya
+            $config['encrypt_name'] = TRUE;
+            $this->load->library('upload', $config);
+
+            // Lakukan upload gambar
+            if (!$this->upload->do_upload('file')) {
+                // Gagal upload
+                $error = array('error' => $this->upload->display_errors());
+                echo json_encode(array('success' => false, 'message' => $error['error']));
+            } else {
+                $uploaded_data = $this->upload->data();
+
+                // Berhasil upload
+                $image_path = base_url('assets/gambar/' . $uploaded_data['file_name']); // Path gambar yang baru diunggah
+                echo json_encode(array('success' => true, 'newImagePath' => $image_path, 'id' =>  $image_path));
+            }
         }
     }
-    public function test1()
-    {
-        $formData = array(
-            'tanggal' => $this->input->post('tanggal'),
-            'status' => $this->input->post('status'),
-            'id_anggota' => $this->input->post('id_anggota')
-        );
 
-        // Get data from model
-        $data['pembayaran'] = $this->M_admin->getPembayaranByFilters($formData);
-        var_dump($data);
+    public function add_article()
+    {
+        if (!$this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/add_article');
+        }
     }
+
+    public function addArticle()
+    {
+        $data = $this->input->post();
+        $data = array(
+            'judul' => $data['judul'],
+            'isi' => $data['content'],
+            'kutipan' => $data['kutipan']
+        );
+        // var_dump($data['judul']);
+
+        if ($this->M_admin->insertArtikel($data)) {
+            $this->session->set_flashdata('message', 'Artikel berhasil ditambahkan.');
+            redirect(base_url('/Admin/post'));
+        } else {
+            $this->session->set_flashdata('error', $this->upload->display_errors());
+            redirect(base_url('/Admin/post'));
+        }
+    }
+
     public function updateArticle()
     {
 

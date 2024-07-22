@@ -138,17 +138,30 @@ p {
     display: flex;
     flex-wrap: wrap;
 }
-
 .kartu-tutor {
     width: 20%;
     margin: 0 auto;
+    text-align: center;
 }
 
-.kartu-tutor img {
-    width: 80%;
+/* .kartu-tutor img {
+    width: 100%;
+    padding-top: 100%;
     border-radius: 50%;
-}
+    object-fit: cover;
+} */
 
+.round {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 11rem;
+    height: 11rem;
+    }
+.round img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 .kartu-tutor p {
     font-family: 'comic sans ms';
     font-weight: 800;
@@ -156,6 +169,8 @@ p {
     text-align: center;
     color: #364f6b;
 }
+
+
 
 .partner-list {
     width: 100%;
@@ -169,10 +184,10 @@ p {
     margin: 0 auto;
 }
 
-.kartu-partner img {
+/* .kartu-partner img {
     width: 150px;
     border-radius: 50%;
-}
+} */
 
 #contact {
     background: #dedede;

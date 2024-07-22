@@ -203,7 +203,7 @@ class M_admin extends CI_Model
         $query =  $this->db->select('*')
             ->from('halaman')
             ->order_by('id', 'ASC')
-            ->limit(10, 1) // 
+            ->limit(1000, 0) // 
             ->get();
 
         return $query->result();
@@ -303,5 +303,9 @@ class M_admin extends CI_Model
     public function insertPartner($data)
     {
         return $this->db->insert('partners', $data);
+    }
+    public function insertArtikel($data)
+    {
+        return $this->db->insert('halaman', $data);
     }
 }
