@@ -59,24 +59,27 @@
     </div>
 </section>
 
-<section class="regular slider">
-    <div class="kolom">
-        <p class="halaman">Our Top News</p>
-        <h2>News</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, optio!</p>
-    </div>
-    <?php foreach ($halaman as $post) { ?>
-        <div class="card">
-            <a href="<?= $post['url'] ?>" style="color: black; text-decoration: none;">
-                <img style="max-height: 10rem;" src="<?php echo $post['gambar']; ?>" class="card-img-top" alt="Image 1">
-                <div class="card-body">
-                    <h5 class="card-title"><?= substr($post['judul'], 0, 17) ?></h5>
-                    <p class="card-text"><?= substr($post['kutipan'], 0, 25)  ?></p>
-                </div>
-            </a>
+<section class="News">
+    <div class="tengah">
+        <div class="kolom">
+            <p class="deskripsi">Our Top News</p>
+            <h2>News</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, optio!</p>
         </div>
-    <?php } ?>
-
+        <div class="regular slider">
+            <?php foreach ($halaman as $post) { ?>
+                <div class="card">
+                    <a href="<?= $post['url'] ?>" style="color: black; text-decoration: none;">
+                        <img style="max-height: 10rem;" src="<?php echo $post['gambar']; ?>" class="card-img-top" alt="Image 1">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= substr($post['judul'], 0, 17) ?></h5>
+                            <p class="card-text"><?= substr($post['kutipan'], 0, 25)  ?></p>
+                        </div>
+                    </a>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
 </section>
 
 <!-- untuk partners -->
