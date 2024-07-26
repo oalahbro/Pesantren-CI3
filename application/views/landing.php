@@ -19,7 +19,7 @@
 <section id="home" class="gap-4 mt-4">
     <img src="<?php echo $halaman[0]['gambar']; ?>" style="max-width:500px" class="rounded-4" />
     <div class="my-auto">
-        <p class="deskripsi"><?php echo $halaman[1]['kutipan'] ?></p>
+        <p class="deskripsi"><?php echo $halaman[0]['kutipan'] ?></p>
         <h2><?php echo $halaman[0]['judul'] ?></h2>
         <p><?php echo $halaman[0]['isi'] ?></p>
         <p><a href="<?php echo $halaman[0]['url'] ?>" class="tbl-pink">Pelajari Lebih Lanjut</a></p>
