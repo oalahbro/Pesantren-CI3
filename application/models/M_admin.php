@@ -308,4 +308,47 @@ class M_admin extends CI_Model
     {
         return $this->db->insert('halaman', $data);
     }
+    public function count_records_petugas($search)
+    {
+        $this->db->select('COUNT(*) AS total');
+        $this->db->from('admin');
+        $totalRecordsRow = $this->db->get()->row_array();
+        return $totalRecordsRow['total'];
+    }
+    public function get_records_petugas($search, $perPage, $offset)
+    {
+        $this->db->select('admin.*, admin.username');
+        $this->db->from('admin');
+        $this->db->group_start();
+        $this->db->like('admin.username', $search);
+        $this->db->group_end();
+        $this->db->order_by('admin.id', 'ASC');
+        $this->db->limit($perPage, $offset);
+        return $this->db->get()->result_array();
+    }
+    public function get_petugas_by_id($id_petugas)
+    {
+        $query = $this->db->get_where('admin', array('id' => $id_petugas));
+        return $query->row_array();
+    }
+    public function updatePetugas($profileData)
+    {
+        $this->db->where('id', $profileData['id']); // Misalnya, sesuai dengan id user saat ini
+        return $this->db->update('admin', $profileData); // Ganti 'users' dengan nama tabel profil Anda
+
+    }
+    public function deletePetugas($id)
+    {
+        return $this->db->delete('admin', ['id' => $id]); // Sesuaikan dengan nama tabel Anda
+    }
+    public function insert_petugas($data)
+    {
+        return $this->db->insert('admin', $data);
+    }
+    public function get_petugas_by_username($username)
+    {
+        $this->db->where('username', $username);
+        $query = $this->db->get('admin'); // Replace 'petugas' with your table name
+        return $query->row();
+    }
 }

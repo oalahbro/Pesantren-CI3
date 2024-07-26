@@ -40,7 +40,10 @@
             <li><a class="nav-link" href="<?php echo base_url('Admin/anggota') ?>"><i class="fas fa-user-edit"></i> <span>ANGGOTA</span></a></li>
             <li><a class="nav-link" href="<?php echo base_url('Admin/history') ?>"><i class="fas fa-user-graduate"></i> <span>RIWAYAT PEMBAYARAN</span></a></li>
             <li class="menu-header">Fitur</li>
-            <li><a class="nav-link" href="<?php echo base_url('admin/post') ?>"><i class="fas fa-money-check-alt"></i> <span>POST</span></a></li>
+            <?php if ($this->session->userdata('admin')['level'] == 1) { ?>
+              <li><a class="nav-link" href="<?php echo base_url('admin/post') ?>"><i class="fas fa-money-check-alt"></i> <span>POST</span></a></li>
+              <li><a class="nav-link" href="<?php echo base_url('admin/petugas') ?>"><i class="fas fa-money-check-alt"></i> <span>PETUGAS</span></a></li>
+            <?php } ?>
             <li><a class="nav-link" href="<?php echo base_url('admin/pembayaran') ?>"><i class="fas fa-money-check-alt"></i> <span>PEMBAYARAN</span></a></li>
             <li><a class="nav-link" href="<?php echo base_url('admin/report') ?>"><i class="fas fa-book"></i> <span>LAPORAN</span></a></li>
         </aside>
