@@ -28,6 +28,7 @@ class Admin extends CI_Controller
             $admin_data = array(
                 'admin_id' => $admin->id,
                 'admin_username' => $admin->username,
+                'level' => $admin->level,
                 'logged_in' => TRUE
             );
             $this->session->set_userdata('admin', $admin_data);
@@ -820,5 +821,134 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('error', $this->upload->display_errors());
             redirect(base_url('/Admin/post'));
         }
+    }
+
+    public function petugas()
+    {
+        if (!$this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/petugas');
+        }
+    }
+
+    public function fetch_petugas()
+    {
+        $perPage = 10;
+        $page = $this->input->get('page') ? $this->input->get('page') : 1;
+        $search = $this->input->get('search') ? $this->input->get('search') : '';
+
+        $totalRecords = $this->M_admin->count_records_petugas($search);
+        $totalPages = ceil($totalRecords / $perPage);
+
+        $offset = ($page - 1) * $perPage;
+
+        $data['results'] = $this->M_admin->get_records_petugas($search, $perPage, $offset);
+        $data['totalPages'] = $totalPages;
+
+        $output = '';
+        $no = ($page - 1) * $perPage + 1; // Calculate initial numbering for the current page
+
+        foreach ($data['results'] as $row) {
+
+            $output .= '<tr>';
+            $output .= '<td>' . $no . '</td>';
+            $output .= '<td>' . $row['username'] . '</td>';
+            $output .= '<td>' . $row['password'] . '</td>';
+            $output .= '<td>';
+            if ($row['level'] == 1) {
+                $output .= '<button class="btn btn-info details-button">ADMIN</button>';
+            } else {
+                $output .= '<button class="btn btn-warning delete-button delete">PETUGAS</button>';
+            }
+            $output .= '</td>';
+            $output .= '<td>';
+            $output .= '<button class="btn btn-info details-button" data-id="' .  $row['id'] . '">Detail</button>';
+            $output .= '<button class="btn btn-danger delete-button delete" data-id="' .  $row['id'] . '">Delete</button>';
+            $output .= '</td>';
+            $output .= '</tr>';
+            $no++; // Increment numbering for the next row
+        }
+
+        // Output the HTML content along with the total pages
+        echo json_encode(array('html' => $output, 'totalPages' => $totalPages));
+    }
+    public function get_petugas_details()
+    {
+        $id_petugas = $this->input->post('id_petugas');
+        $data = $this->M_admin->get_petugas_by_id($id_petugas);
+        echo json_encode($data);
+    }
+    public function updatePetugas()
+    {
+        if ($this->session->userdata('admin')) {
+            $profileData = array(
+                'id' => $this->input->post('idpetugas'),
+                'password' => md5($this->input->post('password')),
+                'level' => $this->input->post('level')
+            );
+            // var_dump($profileData);
+            if ($this->M_admin->updatePetugas($profileData)) {
+                $this->session->set_flashdata('message', 'Profil <b>' . $profileData['username'] . '</b> berhasil disimpan.');
+            } else {
+                $this->session->set_flashdata('message', 'Terjadi kesalahan. Silakan coba lagi.');
+            }
+            redirect(base_url('/Admin/petugas'));
+        } else {
+            redirect(base_url('Admin'));
+        }
+    }
+    public function delete_petugas()
+    {
+        $id = $this->input->post('id_petugas');
+        if ($this->M_admin->deletePetugas($id)) {
+            echo json_encode(array('success' => true, 'message' => 'Petugas berhasil dihapus.'));
+        } else {
+            echo json_encode(array('success' => false, 'message' => 'Gagal menghapus Petugas.'));
+        }
+    }
+    public function addPetugas()
+    {
+        // Load form validation library
+        $this->load->library('form_validation');
+
+        // Set validation rules
+        $this->form_validation->set_rules('username', 'Username', 'required|trim');
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
+        $this->form_validation->set_rules('level', 'Level', 'required|in_list[1,2]');
+
+        if ($this->form_validation->run() == FALSE) {
+            // Validation failed, set error message
+            $this->session->set_flashdata('error', validation_errors());
+        } else {
+            // Validation passed, check for duplicate username
+            $username = $this->input->post('username');
+            $existingUser = $this->M_admin->get_petugas_by_username($username);
+
+            if ($existingUser) {
+                // Username already exists
+                $this->session->set_flashdata('error', 'Username already exists.');
+            } else {
+                // Username is unique, proceed with insertion
+                $data = array(
+                    'username' => $username,
+                    'password' => md5($this->input->post('password')),
+                    'level' => $this->input->post('level')
+                );
+
+                $insert = $this->M_admin->insert_petugas($data);
+
+                if ($insert) {
+                    $this->session->set_flashdata('success', 'Petugas berhasil ditambahkan.');
+                } else {
+                    $this->session->set_flashdata('error', 'Terjadi kesalahan saat menambahkan Petugas.');
+                }
+            }
+        }
+
+        redirect('Admin/petugas');
     }
 }
