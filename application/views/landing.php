@@ -92,7 +92,7 @@
         <div class="tutor-list">
             <?php foreach ($partners as $partner) { ?>
                 <div class="kartu-tutor">
-                    <a href="<?php echo $tutor['url'] ?>">
+                    <a href="">
                         <div class="round">
                             <img src="<?php echo "assets/gambar/" . $partner['foto'] ?>" />
                         </div>
