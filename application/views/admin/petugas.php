@@ -14,7 +14,7 @@
                                     <input type="text" id="searchInput" class="form-control" placeholder="Search">
                                 </div>
                             </form>
-                            <button type="button" class="btn btn-primary ml-2 add">Add Anggota</button>
+                            <button type="button" class="btn btn-primary ml-2 add">Add Petugas</button>
                         </div>
                     </div>
                     <?php if ($this->session->flashdata('success')) : ?>
@@ -173,7 +173,7 @@
                             <!-- Form Group (nama)-->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputFirstName">Password</label>
-                                <input class="form-control" id="Password" type="text" placeholder="Masukkan nama lengkap" name="password" value="">
+                                <input class="form-control" id="Password" type="text" placeholder="Masukkan Password" name="password" value="">
                             </div>
                             <!-- Form Group (last name)-->
 
