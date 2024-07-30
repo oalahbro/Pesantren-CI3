@@ -1,7 +1,7 @@
 <div class="main-content bg-primary">
     <section class="section">
         <div class="section-header">
-            <h1>DATA ANGGOTA</h1>
+            <h1>DATA PETUGAS</h1>
         </div>
         <div class="row">
             <div class="col-md-12">

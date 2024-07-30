@@ -89,13 +89,14 @@
             <h2>Partners</h2>
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi magni tempore expedita sequi. Similique rerum doloremque impedit saepe atque maxime.</p>
         </div>
-        <div class="partner-list">
+        <div class="tutor-list">
             <?php foreach ($partners as $partner) { ?>
-                <div class="kartu-partner">
-                    <a href="<?php echo $partner['url'] ?>">
+                <div class="kartu-tutor">
+                    <a href="<?php echo $tutor['url'] ?>">
                         <div class="round">
                             <img src="<?php echo "assets/gambar/" . $partner['foto'] ?>" />
                         </div>
+                        <p> <?= $partner['nama'] ?></p>
                     </a>
                 </div>
             <?php } ?>

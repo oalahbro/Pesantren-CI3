@@ -106,7 +106,8 @@ class Landing extends MY_Controller
 
             $parse['partners'][] = [
                 'url' => $url,
-                'foto' => $foto
+                'foto' => $foto,
+                'nama' => $partners->nama
             ];
         }
         $this->load->view('components/inc_header');
