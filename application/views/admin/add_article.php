@@ -85,14 +85,11 @@
     });
 
     // Get the text field
-    const copyContent = async () => {
-        const text = document.getElementById('url').textContent;
-        try {
-            await navigator.clipboard.writeText(text);
-            alert('URL copied to clipboard: ' + text);
-        } catch (err) {
-            console.error('Failed to copy: ', err);
-            alert('Failed to copy URL');
-        }
+    function copyContent() {
+
+        /* Select text area by id*/
+        var text = document.getElementById("url").textContent;
+        navigator.clipboard.writeText(text);
+        alert('URL copied to clipboard: ' + text);
     }
 </script>

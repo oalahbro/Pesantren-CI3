@@ -303,7 +303,6 @@ class Admin extends CI_Controller
         }
         redirect('Admin/anggota');
     }
-
     public function fetch_history_pembayaran()
     {
         $perPage = 10;
@@ -336,13 +335,27 @@ class Admin extends CI_Controller
             $output .= '<td>' . $row['nama_lengkap'] . '</td>';
             $output .= '<td>' . $formatted_jumlah_bayar . '</td>';
             $output .= '<td>' . date('d - F - Y', strtotime($row['tgl_bayar'])) . '</td>';
-            $output .= '<td>' . $status . '</td>';
+            $output .= '<td>' . $status;
+            if ($this->session->userdata('admin')['level'] == 1) {
+                $output .= ' <button class="btn btn-danger delete" data-id="' .  $row['id'] . '">&times;</button> </td>';
+            } else {
+                $output .= '<td>';
+            }
             $output .= '</tr>';
             $no++; // Increment numbering for the next row
         }
 
         // Output the HTML content along with the total pages
         echo json_encode(array('html' => $output, 'totalPages' => $totalPages));
+    }
+    public function delete_history()
+    {
+        $id = $this->input->post('id_pembayaran');
+        if ($this->M_admin->deleteHistory($id)) {
+            echo json_encode(array('success' => true, 'message' => 'History berhasil dihapus.'));
+        } else {
+            echo json_encode(array('success' => false, 'message' => 'Gagal menghapus History.'));
+        }
     }
     public function history()
     {
@@ -375,7 +388,7 @@ class Admin extends CI_Controller
     {
         $formData = array(
             'tanggal' => $this->input->post('tanggal'),
-            'status' => $this->input->post('status'),
+            'status' =>  $this->input->post('status'),
             'id_anggota' => $this->input->post('id_anggota')
         );
         // Load PhpSpreadsheet library
@@ -421,6 +434,10 @@ class Admin extends CI_Controller
         $sheet->setCellValue('C' . ($row + 1), ''); // Kolom kosong
         $sheet->setCellValue('D' . ($row + 1), 'Total');
         $sheet->setCellValue('E' . ($row + 1), 'Rp ' . number_format($total_pembayaran, 0, ',', '.'));
+
+        $sheet->setCellValue('C' . ($row + 2), ''); // Kolom kosong
+        $sheet->setCellValue('D' . ($row + 2), 'Petugas :');
+        $sheet->setCellValue('E' . ($row + 2), $this->session->userdata('admin')['admin_username']);
 
         // Set nama file dan header untuk download
         $filename = 'Laporan_Pembayaran_' . date('Ymd') . '.xlsx';
@@ -950,5 +967,43 @@ class Admin extends CI_Controller
         }
 
         redirect('Admin/petugas');
+    }
+
+    public function update_info()
+    {
+        if (!$this->session->userdata('admin')) {
+            redirect(base_url('Admin'));
+        } else {
+            $id = $this->input->get('id');
+            $data = $this->M_admin->getUpdateInfo($id);
+            $parse['info'] = [];
+
+            $parse['info'][] = [
+                'id' => $data->id,
+                'judul' => $data->judul,
+                'isi' => $data->isi
+            ];
+            // print_r($parse['halaman']);
+            $this->load->view('components/admin/header');
+            $this->load->view('components/admin/sidebar');
+            $this->load->view('components/admin/footer');
+            $this->load->view('admin/info', $parse);
+        }
+    }
+    public function updateInfo()
+    {
+
+        $isi = array(
+            'id' => $this->input->post('id'),
+            'judul' => $this->input->post('judul'),
+            'isi' => $this->input->post('isi')
+        );
+
+        if ($this->M_admin->updateInfo($isi)) {
+            $this->session->set_flashdata('message', 'Tutors <b>' . $isi['judul'] . '</b> berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('message', 'Terjadi kesalahan. Silakan coba lagi.');
+        }
+        redirect(base_url('/Admin/post'));
     }
 }

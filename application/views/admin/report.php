@@ -29,9 +29,10 @@
                             <div class="col">
                                 <label for="status" class="col-sm-2 control-label">Status</label>
                                 <select class="form-control" id="status" name="status" placeholder="status">
-                                    <option value="1" selected>Lunas</option>
+                                    <option value="" selected>-Pilih Status-</option>
+                                    <option value="1">Lunas</option>
                                     <option value="2">Ditolak</option>
-                                    <option value="0">Pending</option>
+                                    <option value="'0'">Pending</option>
                                 </select>
                             </div>
                         </div>

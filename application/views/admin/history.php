@@ -44,6 +44,25 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Konfirmasi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin ingin menghapus history transaksi ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" id="deleteAction">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -110,6 +129,36 @@
         $('#searchInput').on('keyup', function() {
             var searchQuery = $(this).val(); // Get search query
             fetchData(1, searchQuery); // Update content with search query and reset to page 1
+        });
+    });
+
+    $(document).on('click', '.delete', function() {
+        var id_pembayaran = $(this).data('id');
+        $('#deleteAction').data('id', id_pembayaran);
+        $('#deleteAction').data('action', 'delete');
+        $('#deleteModal').modal('show');
+    });
+    $('#deleteAction').click(function() {
+        var id_pembayaran = $(this).data('id');
+        // Lakukan AJAX request untuk proses accept/reject
+        $.ajax({
+            url: '<?php echo base_url('admin/delete_history') ?>',
+            method: 'POST',
+            data: {
+                id_pembayaran: id_pembayaran
+            },
+            success: function(response) {
+                response = JSON.parse(response);
+                // Tampilkan pesan sukses atau error
+                alert(response.message);
+                // Refresh tabel pembayaran jika berhasil
+                if (response.success) {
+                    location.reload();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
         });
     });
 </script>

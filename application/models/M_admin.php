@@ -50,6 +50,7 @@ class M_admin extends CI_Model
     {
         $this->db->select('SUM(total_bayar) AS total_payments');
         $this->db->from('pembayaran');
+        $this->db->where('pembayaran.status', 1);
         $this->db->where('MONTH(tgl_bayar)', date('m'));
         $this->db->where('YEAR(tgl_bayar)', date('Y'));
         $query = $this->db->get();
@@ -350,5 +351,19 @@ class M_admin extends CI_Model
         $this->db->where('username', $username);
         $query = $this->db->get('admin'); // Replace 'petugas' with your table name
         return $query->row();
+    }
+    public function getUpdateInfo($id)
+    {
+        $query = $this->db->get_where('info', array('id' => $id));
+        return $query->row();
+    }
+    public function updateInfo($info)
+    {
+        $this->db->where('id', $info['id']);
+        return $this->db->update('info', $info);
+    }
+    public function deleteHistory($id)
+    {
+        return $this->db->delete('pembayaran', ['id' => $id]); // Sesuaikan dengan nama tabel Anda
     }
 }
